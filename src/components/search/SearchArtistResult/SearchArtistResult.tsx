@@ -1,8 +1,9 @@
 import type { DeezerArtist } from "@/types/deezer";
-import { getFreeArtist } from "@/utils/apiFunc";
+
 import SearchArtistResultContent from "../SearchArtistResultContent/SearchArtistResultContent";
 import SearchTotal from "../SearchTotal/SearchTotal";
 import styles from "./SearchArtistResult.module.css";
+import { getFreeArtist } from "@/utils/apiFunc/artist";
 
 const SearchArtistResult = async ({
   freeWord,
@@ -13,8 +14,8 @@ const SearchArtistResult = async ({
   url: string;
   style: string;
 }) => {
-  const res = await getFreeArtist(freeWord);
-  const searchArtist: DeezerArtist[] = res.resultData;
+  const res = await getFreeArtist(freeWord, "25");
+  const searchArtist: DeezerArtist[] = res;
 
   return (
     <div>

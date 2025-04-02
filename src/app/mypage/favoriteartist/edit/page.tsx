@@ -3,7 +3,8 @@ import FavoriteArtistsEditContainer from "@/components/mypage/FavoriteArtistsEdi
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import BreadList from "@/components/top/BreadList/BreadList";
 import type { DeezerArtist } from "@/types/deezer";
-import { checkLoggedInServer, getArtist } from "@/utils/apiFunc";
+import { checkLoggedInServer } from "@/utils/apiFunc";
+import { getArtist } from "@/utils/apiFunc/artist";
 import { getFavoriteArtists } from "@/utils/favoriteArtist";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import styles from "./page.module.css";

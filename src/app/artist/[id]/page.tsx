@@ -3,7 +3,8 @@ import MusicContentTitle from "@/components/music/MusicContentTitle/MusicContent
 import PlayHistory from "@/components/music/PlayHistory/PlayHistory";
 import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { getArtist, getArtistAlbum, getArtistSongs } from "@/utils/apiFunc";
+import { getArtistAlbum, getArtistSongs } from "@/utils/apiFunc";
+import { getArtist } from "@/utils/apiFunc/artist";
 import styles from "./page.module.css";
 
 type ArtistPageProps = {
