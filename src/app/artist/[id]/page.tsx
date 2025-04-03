@@ -20,7 +20,7 @@ const ArtistPage = async ({ params }: ArtistPageProps) => {
   const artistSingleSongs = await getArtistSongs(Number(id), 4);
 
   // 取得したアーティスト名からアルバム情報を取得
-  const artistAlbums = await getArtistAlbum(artistData.resArtistData.name, 4);
+  const artistAlbums = await getArtistAlbum(artistData.name, 4);
 
   return (
     <>
@@ -33,9 +33,9 @@ const ArtistPage = async ({ params }: ArtistPageProps) => {
       <div className={styles.artistDetailPage}>
         <div className={styles.artistInfoContent}>
           <ArtistInfo
-            image={artistData.resArtistData.picture_xl}
-            name={artistData.resArtistData.name}
-            id={artistData.resArtistData.id}
+            image={artistData.picture_xl}
+            name={artistData.name}
+            id={artistData.id}
           />
         </div>
 

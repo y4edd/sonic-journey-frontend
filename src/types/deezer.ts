@@ -320,7 +320,7 @@ export type SearchAlbum = {
 export type GenreInfo = {
   id: number;
   name: string;
-  picture: string;
+  picture_xl: string;
 };
 
 // プレイリストの型
