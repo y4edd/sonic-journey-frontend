@@ -5,9 +5,10 @@ import MusicContentTitle from "@/components/music/MusicContentTitle/MusicContent
 import PlayHistory from "@/components/music/PlayHistory/PlayHistory";
 import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { getAlbum, getArtistSongs } from "@/utils/apiFunc";
+import { getArtistSongs } from "@/utils/apiFunc";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import styles from "./page.module.css";
+import { getAlbum } from "@/utils/apiFunc/album";
 
 type AlbumPageProps = {
   params: Promise<{ id: string }>;
@@ -19,7 +20,7 @@ const AlbumPage = async ({ params }: AlbumPageProps) => {
   const { id } = await params;
 
   // 取得したidのアルバム情報を取得
-  const { resultData } = await getAlbum(Number(id));
+  const  resultData =  await getAlbum(Number(id));
 
   // 上記で取得したアーティストIDからアーティストの人気楽曲を最大4件取得
   const artistSongs = await getArtistSongs(resultData.artist.id, 4);

@@ -130,7 +130,7 @@ export const getArtistSongs = async (artistId: number, limit: number) => {
 // artistにはアーティストidを入力
 export const getArtist = async (artist: number) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/artistSearch?artist=${artist}`, {
+    const res = await fetch(`http://localhost:3005/artist/${artist}`, {
       cache: "no-cache",
     });
 
@@ -144,44 +144,6 @@ export const getArtist = async (artist: number) => {
   }
 };
 
-// アルバムidからアルバム情報を取得する関数
-// albumにはアルバムidを入力
-export const getAlbum = async (album: number) => {
-  try {
-    const res = await fetch(`http://localhost:3000/api/albumSearch?album=${album}`, {
-      cache: "no-cache",
-    });
-
-    if (!res.ok) {
-      throw new Error("データが見つかりませんでした");
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-// アーティストのアルバムをlimit件取得する関数
-// albumにはアーティスト名を入力
-export const getArtistAlbum = async (artist: string, limit?: number) => {
-  try {
-    const res = await fetch(
-      `http://localhost:3000/api/artistAlbums?artistName=${artist}&limit=${limit}`,
-      {
-        cache: "no-cache",
-      },
-    );
-
-    if (!res.ok) {
-      throw new Error("データが見つかりませんでした");
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 // FreeSearchの検索ワードを使用して楽曲を取得する関数
 export const getSearchSongs = async (freeWord: string) => {

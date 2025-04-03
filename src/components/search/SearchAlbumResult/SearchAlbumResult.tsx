@@ -1,9 +1,9 @@
 import type { SearchAlbum } from "@/types/deezer";
-import { getArtistAlbum } from "@/utils/apiFunc";
 import React from "react";
 import SearchAlbumContent from "../SearchAlbumContent/SearchAlbumContent";
 import SearchTotal from "../SearchTotal/SearchTotal";
 import styles from "./SearchAlbumResult.module.css";
+import { getArtistAlbum } from "@/utils/apiFunc/album";
 
 const SearchAlbumResult = async ({
   freeWord,
@@ -17,7 +17,7 @@ const SearchAlbumResult = async ({
   //アルバムの検索結果を取得する関数を呼び出し
   const searchAlbum = await getArtistAlbum(freeWord);
 
-  const resultAlbum: SearchAlbum[] = searchAlbum.resultData;
+  const resultAlbum: SearchAlbum[] = searchAlbum;
   return (
     <>
       <div>
