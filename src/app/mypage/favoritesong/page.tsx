@@ -5,7 +5,8 @@ import FavoriteSongsContainer from "@/components/mypage/FavoriteSongsContainer/F
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import BreadList from "@/components/top/BreadList/BreadList";
 import type { DeezerSong } from "@/types/deezer";
-import { checkLoggedInServer, getSong } from "@/utils/apiFunc";
+import { checkLoggedInServer } from "@/utils/apiFunc";
+import { getSong } from "@/utils/apiFunc/song";
 import { getFavoriteSongs } from "@/utils/favoriteSong";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 
@@ -29,7 +30,7 @@ const FavoriteSongs = async () => {
   // NOTE: お気に入り楽曲の楽曲idをもとに、楽曲情報を取得してデータに加える
   const favoriteSongsData = await Promise.all(
     favoriteSongs.resultData.map(async (song) => {
-      const songData: { resSongData: DeezerSong } = await getSong(song.songId);
+      const songData: { resSongData: DeezerSong } = await getSong(song.songId.toString());
       return { ...song, songData: songData.resSongData };
     }),
   );

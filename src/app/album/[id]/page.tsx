@@ -5,10 +5,10 @@ import MusicContentTitle from "@/components/music/MusicContentTitle/MusicContent
 import PlayHistory from "@/components/music/PlayHistory/PlayHistory";
 import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { getArtistSongs } from "@/utils/apiFunc";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import styles from "./page.module.css";
 import { getAlbum } from "@/utils/apiFunc/album";
+import { getArtistSongs } from "@/utils/apiFunc/song";
 
 type AlbumPageProps = {
   params: Promise<{ id: string }>;
@@ -58,7 +58,7 @@ const AlbumPage = async ({ params }: AlbumPageProps) => {
         <div className={styles.artistFavoriteSongsContent}>
           <MusicContentTitle title="人気楽曲" />
           <SongList
-            songs={artistSongs.resultData}
+            songs={artistSongs}
             url="music"
             errorMessage="人気楽曲を取得できませんでした"
           />

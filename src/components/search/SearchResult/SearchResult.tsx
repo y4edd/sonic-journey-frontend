@@ -1,8 +1,8 @@
 import type { Result } from "@/types/deezer";
-import { getSearchSongs } from "@/utils/apiFunc";
 import SearchContent from "../SearchContent/SearchContent";
 import SearchTotal from "../SearchTotal/SearchTotal";
 import styles from "./SearchResult.module.css";
+import { getSearchSongs } from "@/utils/apiFunc/song";
 
 const SearchResult = async ({
   freeWord,
@@ -17,7 +17,7 @@ const SearchResult = async ({
 }) => {
   //関数を使用して検索結果を取得
   const res = await getSearchSongs(freeWord);
-  const results: Result[] = res.resultData;
+  const results: Result[] = res;
 
   return (
     <>

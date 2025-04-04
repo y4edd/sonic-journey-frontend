@@ -5,10 +5,11 @@ import DeleteButton from "@/components/mypage/DeleteButton/DeleteButton";
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { checkLoggedInServer, getSong, getUserId } from "@/utils/apiFunc";
+import { checkLoggedInServer, getUserId } from "@/utils/apiFunc";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import { getPlayHistory } from "@/utils/history";
 import styles from "./page.module.css";
+import { getSong } from "@/utils/apiFunc/song";
 
 const PlayList = async () => {
   // クッキーからトークン取得
@@ -34,7 +35,7 @@ const PlayList = async () => {
   const playHistory = await getPlayHistory(token, 10);
 
   // 取得したidを使って楽曲情報を取得
-  const playHistories = await Promise.all(playHistory.songIds.map((id: number) => getSong(id)));
+  const playHistories = await Promise.all(playHistory.songIds.map((id: number) => getSong(id.toString())));
 
   const historySongsInfo = playHistories.map((playHistorySong) => {
     return playHistorySong.resSongData;

@@ -1,5 +1,5 @@
 import PlayHistory from "@/components/music/PlayHistory/PlayHistory";
-import { getSong } from "@/utils/apiFunc";
+import { getSong } from "@/utils/apiFunc/song";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import { getPlayHistory } from "@/utils/history";
 import { render, screen } from "@testing-library/react";
@@ -12,7 +12,7 @@ jest.mock("@/utils/history", () => ({
   getPlayHistory: jest.fn(),
 }));
 
-jest.mock("@/utils/apiFunc", () => ({
+jest.mock("@/utils/apiFunc/song", () => ({
   getSong: jest.fn(),
 }));
 
@@ -39,8 +39,8 @@ describe("PlayHistoryコンポーネントの単体テスト", () => {
 
     (getTokenFromCookie as jest.Mock).mockReturnValue("mockToken");
     (getPlayHistory as jest.Mock).mockResolvedValue({ songIds: [1, 2] });
-    (getSong as jest.Mock).mockImplementation((id: number) =>
-      Promise.resolve({ resSongData: mockSongs.find((song) => song.id === id) }),
+    (getSong as jest.Mock).mockImplementation((id: string) =>
+      Promise.resolve({ resSongData: mockSongs.find((song) => song.id.toString() === id) }),
     );
 
     // 非同期コンポーネントを呼び出し、JSX を取得、レンダリング

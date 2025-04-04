@@ -3,10 +3,10 @@ import MusicContentTitle from "@/components/music/MusicContentTitle/MusicContent
 import PlayHistory from "@/components/music/PlayHistory/PlayHistory";
 import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { getArtistSongs } from "@/utils/apiFunc";
 import { getArtist } from "@/utils/apiFunc/artist";
 import styles from "./page.module.css";
 import { getArtistAlbum } from "@/utils/apiFunc/album";
+import { getArtistSongs } from "@/utils/apiFunc/song";
 
 type ArtistPageProps = {
   params: Promise<{ id: string }>;
@@ -43,7 +43,7 @@ const ArtistPage = async ({ params }: ArtistPageProps) => {
         <div className={styles.singleContent}>
           <MusicContentTitle title="シングル" />
           <SongList
-            songs={artistSingleSongs.resultData}
+            songs={artistSingleSongs}
             url="music"
             errorMessage="シングル楽曲を取得できませんでした"
           />
@@ -52,7 +52,7 @@ const ArtistPage = async ({ params }: ArtistPageProps) => {
         <div className={styles.albumContent}>
           <MusicContentTitle title="アルバム" />
           <SongList
-            songs={artistAlbums.resultData}
+            songs={artistAlbums}
             url="album"
             errorMessage="アルバムを取得できませんでした"
           />
