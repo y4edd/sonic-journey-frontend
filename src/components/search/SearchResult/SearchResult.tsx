@@ -1,8 +1,8 @@
 import type { Result } from "@/types/deezer";
+import { getSearchSongs } from "@/utils/apiFunc/song";
 import SearchContent from "../SearchContent/SearchContent";
 import SearchTotal from "../SearchTotal/SearchTotal";
 import styles from "./SearchResult.module.css";
-import { getSearchSongs } from "@/utils/apiFunc/song";
 
 const SearchResult = async ({
   freeWord,

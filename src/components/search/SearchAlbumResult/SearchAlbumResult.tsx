@@ -1,9 +1,8 @@
 import type { SearchAlbum } from "@/types/deezer";
-import React from "react";
+import { getArtistAlbum } from "@/utils/apiFunc/album";
 import SearchAlbumContent from "../SearchAlbumContent/SearchAlbumContent";
 import SearchTotal from "../SearchTotal/SearchTotal";
 import styles from "./SearchAlbumResult.module.css";
-import { getArtistAlbum } from "@/utils/apiFunc/album";
 
 const SearchAlbumResult = async ({
   freeWord,

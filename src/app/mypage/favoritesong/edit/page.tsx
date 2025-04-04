@@ -4,10 +4,10 @@ import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import BreadList from "@/components/top/BreadList/BreadList";
 import type { DeezerSong } from "@/types/deezer";
 import { checkLoggedInServer } from "@/utils/apiFunc";
+import { getSong } from "@/utils/apiFunc/song";
 import { getFavoriteSongs } from "@/utils/favoriteSong";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import styles from "./page.module.css";
-import { getSong } from "@/utils/apiFunc/song";
 
 type favoriteSong = {
   songId: number;

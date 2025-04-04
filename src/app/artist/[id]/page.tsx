@@ -3,10 +3,10 @@ import MusicContentTitle from "@/components/music/MusicContentTitle/MusicContent
 import PlayHistory from "@/components/music/PlayHistory/PlayHistory";
 import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { getArtist } from "@/utils/apiFunc/artist";
-import styles from "./page.module.css";
 import { getArtistAlbum } from "@/utils/apiFunc/album";
+import { getArtist } from "@/utils/apiFunc/artist";
 import { getArtistSongs } from "@/utils/apiFunc/song";
+import styles from "./page.module.css";
 
 type ArtistPageProps = {
   params: Promise<{ id: string }>;
@@ -33,11 +33,7 @@ const ArtistPage = async ({ params }: ArtistPageProps) => {
       />
       <div className={styles.artistDetailPage}>
         <div className={styles.artistInfoContent}>
-          <ArtistInfo
-            image={artistData.picture_xl}
-            name={artistData.name}
-            id={artistData.id}
-          />
+          <ArtistInfo image={artistData.picture_xl} name={artistData.name} id={artistData.id} />
         </div>
 
         <div className={styles.singleContent}>
