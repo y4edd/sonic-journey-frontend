@@ -16,10 +16,7 @@ const GenreButtons = ({
   selectGenre: number;
   setSelectGenre: Dispatch<SetStateAction<number>>;
 }) => {
-  const { data, error, isLoading } = useSWR<GenreInfo[]>(
-    "http://localhost:3005/genre",
-    fetcher,
-  );
+  const { data, error, isLoading } = useSWR<GenreInfo[]>("http://localhost:3005/genre", fetcher);
 
   if (error) return <div>エラー</div>;
   if (isLoading) return <div>ジャンルの情報を取得中...</div>;

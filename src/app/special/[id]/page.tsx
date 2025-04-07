@@ -1,6 +1,6 @@
 import { Special } from "@/components/special/DetailPage/Special/Special";
-import { getSpecialImage } from "@/components/special/TopPageLink/TopPageLink";
 import BreadList from "@/components/top/BreadList/BreadList";
+import { getSpecialImage } from "@/utils/apiFunc/special";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 
 type SongPageProps = {

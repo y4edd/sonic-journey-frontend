@@ -1,18 +1,7 @@
-import type { SpecialOverView } from "@/types/deezer";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./TopPageLink.module.css";
-
-export const getSpecialImage = async () => {
-  const response = await fetch("http://localhost:3000/api/getSpecialImage", {
-    cache: "no-store",
-  });
-  if (!response.ok) {
-    throw new Error("特集ページの情報の取得に失敗しました");
-  }
-  const images: SpecialOverView[] = await response.json();
-  return images;
-};
+import { getSpecialImage } from "@/utils/apiFunc/special";
 
 export const TopPageLink = async () => {
   const specialImages = await getSpecialImage();
