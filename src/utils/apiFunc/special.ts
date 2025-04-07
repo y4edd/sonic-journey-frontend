@@ -1,4 +1,4 @@
-import { SpecialOverView, SpecialSongs } from "@/types/deezer";
+import type { SpecialOverView, SpecialSongs } from "@/types/deezer";
 
 export const getSpecialImage = async () => {
   const response = await fetch("http://localhost:3005/pick", {

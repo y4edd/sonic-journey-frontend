@@ -1,10 +1,10 @@
+import type { SpecialSongs } from "@/types/deezer";
 import { getSong } from "@/utils/apiFunc/song";
+import { getSpecialImage, getSpecialSongs } from "@/utils/apiFunc/special";
 import { SpecialHeader } from "../SpecialHeader/SpecialHeader";
 import { SpecialPlaylist } from "../SpecialPlaylist/SpecialPlaylist";
 import { SpecialTitles } from "../SpecialTitles/SpecialTitles";
 import styles from "./Special.module.css";
-import { getSpecialImage, getSpecialSongs } from "@/utils/apiFunc/special";
-import { SpecialSongs } from "@/types/deezer";
 
 export const Special = async ({ id }: { id: number }) => {
   const specialOverViews = await getSpecialImage();

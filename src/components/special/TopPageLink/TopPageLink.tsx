@@ -1,7 +1,7 @@
+import { getSpecialImage } from "@/utils/apiFunc/special";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./TopPageLink.module.css";
-import { getSpecialImage } from "@/utils/apiFunc/special";
 
 export const TopPageLink = async () => {
   const specialImages = await getSpecialImage();
