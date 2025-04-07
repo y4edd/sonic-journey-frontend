@@ -321,6 +321,7 @@ export type GenreInfo = {
   id: number;
   name: string;
   picture_xl: string;
+  picture?: string;
 };
 
 // プレイリストの型

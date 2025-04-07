@@ -49,21 +49,5 @@ export const getGenreArtist = async (genre: number) => {
   }
 };
 
-// ジャンルごとの情報を取得する関数
-export const getGenreInfo = async () => {
-  try {
-    const response = await fetch("http://localhost:3000/api/getGenreArtistId", {
-      cache: "no-cache",
-    });
-    if (!response.ok) {
-      throw new Error("データが見つかりませんでした");
-    }
-    const res = await response.json();
-    return res;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 // GenreArtist.tsxにて下記呼び出し
 //  `http://localhost:3005/artist?genre=${selectGenre}`

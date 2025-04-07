@@ -17,7 +17,7 @@ const GenreButtons = ({
   setSelectGenre: Dispatch<SetStateAction<number>>;
 }) => {
   const { data, error, isLoading } = useSWR<GenreInfo[]>(
-    "http://localhost:3000/api/getGenreArtistId",
+    "http://localhost:3005/genre",
     fetcher,
   );
 

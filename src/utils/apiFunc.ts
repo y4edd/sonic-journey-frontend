@@ -71,40 +71,6 @@ export const getRankSingleSongs = async (limit: number) => {
   }
 };
 
-// ジャンルごとの情報を取得する関数
-export const getGenreInfo = async () => {
-  try {
-    const response = await fetch("http://localhost:3000/api/getGenreArtistId", {
-      cache: "no-cache",
-    });
-    if (!response.ok) {
-      throw new Error("データが見つかりませんでした");
-    }
-    const res = await response.json();
-    return res;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-// アーティストidからアーティスト情報を取得する関数
-// artistにはアーティストidを入力
-export const getArtist = async (artist: number) => {
-  try {
-    const res = await fetch(`http://localhost:3005/artist/${artist}`, {
-      cache: "no-cache",
-    });
-
-    if (!res.ok) {
-      throw new Error("データが見つかりませんでした");
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 // ユーザー毎のプレイリストを取得する関数
 export const getUserPlaylist = async (user_id: string) => {
   try {

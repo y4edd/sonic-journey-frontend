@@ -1,7 +1,7 @@
 import type { GenreInfo } from "@/types/deezer";
-import { getGenreInfo } from "@/utils/apiFunc";
 import GenreContent from "../GenreContent/GenreContent";
 import styles from "./GenreGroup.module.css";
+import { getGenreInfo } from "@/utils/apiFunc/genre";
 
 const GenreGroup = async () => {
   const genreArtistInfo: GenreInfo[] = await getGenreInfo();
