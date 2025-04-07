@@ -11,7 +11,7 @@ export const Special = async ({ id }: { id: number }) => {
   const specialOverView = specialOverViews[id - 1];
   const specialSongs = await getSpecialSongs(id);
   const specialPlaylistInfo = await Promise.all(
-    specialSongs.map(async(song: SpecialSongs) => await getSong(song.api_song_id.toString()))
+    specialSongs.map(async (song: SpecialSongs) => await getSong(song.api_song_id.toString())),
   );
   return (
     <>

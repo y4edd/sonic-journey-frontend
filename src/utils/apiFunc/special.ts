@@ -22,4 +22,3 @@ export const getSpecialSongs = async (id: number) => {
   const specialSongs: SpecialSongs[] = await response.json();
   return specialSongs;
 };
-
