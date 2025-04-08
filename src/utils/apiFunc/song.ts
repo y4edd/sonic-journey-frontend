@@ -53,3 +53,41 @@ export const getSong = async (song: string) => {
     console.error(error);
   }
 };
+
+// シングルランキング楽曲を取得する関数
+// limitには取得したい件数を入力
+export const getRankSingleSongs = async (limit: number) => {
+  try {
+    const res = await fetch(`http://localhost:3005/song/ranking?limit=${limit}`, {
+      cache: "no-cache",
+    });
+
+    if (!res.ok) {
+      throw new Error("データが見つかりませんでした");
+    }
+
+    const result = await res.json();
+
+    if (result.length < limit && limit === 4) {
+      for (let i = 0; i <= limit - result.length; i++) {
+        result.push({
+          id: 0,
+          title: "title",
+          artist: {
+            id: 1,
+            name: "artist",
+          },
+          album: {
+            id: 1,
+            title: "album",
+            cover_xl: "/images/defaultsong.png",
+          },
+        });
+      }
+    }
+
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};

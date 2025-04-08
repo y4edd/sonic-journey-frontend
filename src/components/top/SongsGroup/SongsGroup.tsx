@@ -6,12 +6,12 @@ const SongsGroup = ({
   songs,
   url,
 }: {
-  songs: { resultData: DeezerSong[] };
+  songs: DeezerSong[];
   url: string;
 }) => {
   return (
     <div className={styles.newSongGroup}>
-      {songs.resultData.map((song: DeezerSong) => {
+      {songs.map((song: DeezerSong) => {
         return <SongContent song={song} url={url} key={song.id} />;
       })}
     </div>

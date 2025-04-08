@@ -3,7 +3,7 @@
 // limitには取得したい件数を入力
 export const getNewSongs = async (limit: number) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/newSongsSearch?limit=${limit}`, {
+    const res = await fetch(`http://localhost:3005/song/new?limit=${limit}`, {
       cache: "no-cache",
     });
 
@@ -13,9 +13,9 @@ export const getNewSongs = async (limit: number) => {
 
     const result = await res.json();
 
-    if (result.resultData.length < limit && limit === 4) {
-      for (let i = 0; i <= limit - result.resultData.length; i++) {
-        result.resultData.push({
+    if (result.length < limit && limit === 4) {
+      for (let i = 0; i <= limit - result.length; i++) {
+        result.push({
           id: 0,
           title: "title",
           cover_xl: "/images/defaultsong.png",
@@ -27,44 +27,6 @@ export const getNewSongs = async (limit: number) => {
         });
       }
     }
-    return result;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-// シングルランキング楽曲を取得する関数
-// limitには取得したい件数を入力
-export const getRankSingleSongs = async (limit: number) => {
-  try {
-    const res = await fetch(`http://localhost:3000/api/rankSingleSongSearch?limit=${limit}`, {
-      cache: "no-cache",
-    });
-
-    if (!res.ok) {
-      throw new Error("データが見つかりませんでした");
-    }
-
-    const result = await res.json();
-
-    if (result.resultData.length < limit && limit === 4) {
-      for (let i = 0; i <= limit - result.resultData.length; i++) {
-        result.resultData.push({
-          id: 0,
-          title: "title",
-          artist: {
-            id: 1,
-            name: "artist",
-          },
-          album: {
-            id: 1,
-            title: "album",
-            cover_xl: "/images/defaultsong.png",
-          },
-        });
-      }
-    }
-
     return result;
   } catch (error) {
     console.error(error);

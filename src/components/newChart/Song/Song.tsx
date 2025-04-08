@@ -10,7 +10,7 @@ import styles from "./Song.module.css";
 export const Song = ({
   songs,
 }: {
-  songs: { resultData: DeezerChartSong[] };
+  songs: DeezerChartSong[];
 }) => {
   const { gridLayout, handleGridLayoutIconClick, handleListLayoutIconClick } = UseLayoutChange();
 
@@ -29,7 +29,7 @@ export const Song = ({
           handleThisClick={handleThisClick}
         />
       </div>
-      <SongItem songs={songs.resultData} gridLayout={gridLayout} weekCheck={weekCheck} />
+      <SongItem songs={songs} gridLayout={gridLayout} weekCheck={weekCheck} />
     </>
   );
 };

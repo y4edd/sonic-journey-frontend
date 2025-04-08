@@ -5,7 +5,7 @@ import type { DeezerSong } from "@/types/deezer";
 import { SongItem } from "../SongItem/SongItem";
 import styles from "./Song.module.css";
 
-export const Song = ({ songs }: { songs: { resultData: DeezerSong[] } }) => {
+export const Song = ({ songs }: { songs: DeezerSong[] }) => {
   const { gridLayout, handleGridLayoutIconClick, handleListLayoutIconClick } = UseLayoutChange();
 
   return (
@@ -17,7 +17,7 @@ export const Song = ({ songs }: { songs: { resultData: DeezerSong[] } }) => {
           handleListLayoutIconClick={handleListLayoutIconClick}
         />
       </div>
-      <SongItem songs={songs.resultData} gridLayout={gridLayout} />
+      <SongItem songs={songs} gridLayout={gridLayout} />
     </>
   );
 };

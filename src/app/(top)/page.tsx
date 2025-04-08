@@ -1,4 +1,4 @@
-import { getSpecialImage } from "@/components/special/TopPageLink/TopPageLink";
+
 import BreadList from "@/components/top/BreadList/BreadList";
 import ContentTitle from "@/components/top/ContentTitle/ContentTitle";
 import FreeSearch from "@/components/top/FreeSearch/FreeSearch";
@@ -6,8 +6,10 @@ import GenreGroup from "@/components/top/GenreGroup/GenreGroup";
 import LinkButton from "@/components/top/LinkButton/LinkButton";
 import Slider from "@/components/top/Slider/Slider";
 import SongsGroup from "@/components/top/SongsGroup/SongsGroup";
-import { getNewSongs, getRankSingleSongs } from "@/utils/apiFunc";
+import { getNewSongs } from "@/utils/apiFunc";
 import styles from "./page.module.css";
+import { getSpecialImage } from "@/utils/apiFunc/special";
+import { getRankSingleSongs } from "@/utils/apiFunc/song";
 
 const TopPage = async () => {
   // 新着人気楽曲を取得
