@@ -15,7 +15,8 @@ import { toast } from "react-toastify";
 import styles from "./page.module.css";
 import "react-toastify/dist/ReactToastify.css";
 import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAccess";
-import { fetchUser, fetchUserInfo } from "@/utils/apiFunc";
+import { fetchUser } from "@/utils/apiFunc";
+import { fetchUserInfo, patchUser } from "@/utils/apiFunc/user";
 
 const Edit = () => {
   // useStateでサーバーエラーの管理
@@ -25,6 +26,7 @@ const Edit = () => {
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
+    password: "",
   });
 
   // React hook formでフォーム管理
@@ -59,7 +61,7 @@ const Edit = () => {
     try {
       const data = await fetchUserInfo();
       if (data) {
-        setUserInfo({ name: data.name, email: data.email });
+        setUserInfo({ name: data.name, email: data.email, password: data.password });
       }
     } catch {
       setServerError("ユーザー情報の取得に失敗しました");
@@ -72,6 +74,14 @@ const Edit = () => {
   useEffect(() => {
     loadUser();
     loadUserInfo();
+    const passwordInput = document.querySelector<HTMLInputElement>("input[name='password']");
+  
+    setTimeout(() => {
+      if (passwordInput?.value) {
+        userInfo.password = passwordInput.value;
+      }
+      // オートフィルが反映されるのを少し待つ
+    }, 200);
   }, []);
 
   if (loading) {
@@ -80,21 +90,11 @@ const Edit = () => {
   if (userId === null) {
     return <UnauthorizedAccess />;
   }
-
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     try {
-      const response = await fetch("/api/user/edit", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        // 詳細なエラーメッセージ取得
-        const error = await response.json();
-        setServerError(error.message);
-      } else {
+      const response = await patchUser(data);
+
+      if(response?.ok) {
         toast.success("アカウント情報の編集が完了しました", {
           position: "top-center",
           autoClose: 1000,
@@ -106,6 +106,9 @@ const Edit = () => {
         setTimeout(() => {
           router.push("/");
         }, 1500);
+      } else {
+        const res = await response?.json();
+        setServerError(res.message);
       }
     } catch (err) {
       console.log(err);

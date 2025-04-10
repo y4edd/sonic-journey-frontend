@@ -51,7 +51,10 @@ export const getUserPlaylist = async (user_id: string) => {
 // ログイン状態を確認し、idを返す
 export const fetchUser = async () => {
   try {
-    const response = await fetch("/api/user/checkLogin");
+    const response = await fetch("/api/user/checkLogin", {
+      credentials: "include",
+    }
+    );
     if (!response.ok) {
       throw new Error("ログイン状態が確認できませんでした");
     }
@@ -125,19 +128,6 @@ export const getUserId = async (token: string) => {
   }
 };
 
-// ユーザー情報を取得する非同期処理
-export const fetchUserInfo = async () => {
-  try {
-    const response = await fetch("/api/user/getUserInfo");
-    const data = await response.json();
-    if (!response.ok) {
-      throw new Error(`エラー: ${response.status} - ${data.message}`);
-    }
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 // DBからお気に入り楽曲の楽曲idと更新日を取得する関数（userIdを引数にとる）
 export const getFavoriteSongsForFav = async (userId: string) => {

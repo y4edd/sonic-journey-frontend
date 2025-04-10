@@ -7,13 +7,14 @@ import FormInput from "@/components/user/Form/FormInput";
 import Guide from "@/components/user/Guide/Guide";
 import Information from "@/components/user/Information/Information";
 import { loginSchema } from "@/lib/validation";
-import type { FormData } from "@/types/user";
+import type { FormData, loginData } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import styles from "./page.module.css";
+import { login } from "@/utils/apiFunc/auth";
 
 const Login = () => {
   const [serverError, setServerError] = useState<string | null>(null);
@@ -22,43 +23,53 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(loginSchema),
   });
 
+  // オートフィル後のDOMから値を読み取り、それをRHFに流し込む
+  // （RHFがオートフィルの値を取得しないため）
+  useEffect(() => {
+    const emailInput = document.querySelector<HTMLInputElement>("input[name='email']");
+    const passwordInput = document.querySelector<HTMLInputElement>("input[name='password']");
+  
+    setTimeout(() => {
+      if (emailInput?.value) {
+        setValue("email", emailInput.value);
+      }
+      if (passwordInput?.value) {
+        setValue("password", passwordInput.value);
+      }
+      // オートフィルが反映されるのを少し待つ
+    }, 200);
+  }, []);
+
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+  const onSubmit: SubmitHandler<FormData> = async (data: loginData) => {
     try {
-      const response = await fetch("/api/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+      setServerError("");
+      // 外部宣言の非同期関数を呼び出す
+      await login(data);
+      toast.success("ログインに成功しました！", {
+        position: "top-center",
+        autoClose: 1000,
+        closeButton: true,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
       });
-
-      if (!response.ok) {
-        // 詳細なエラーメッセージ取得
-        const error = await response.json();
-        setServerError(error.message);
-      } else {
-        toast.success("ログインに成功しました！", {
-          position: "top-center",
-          autoClose: 1000,
-          closeButton: true,
-          hideProgressBar: true,
-          closeOnClick: true,
-          theme: "colored",
-        });
-        setTimeout(() => {
-          router.push("/");
-        }, 1500);
-      }
+      setTimeout(() => {
+        router.push("/");
+      }, 1500);
     } catch (err) {
-      console.log(err);
-      setServerError("予期せぬエラーが発生しました");
+      if (err instanceof Error) {
+        setServerError(err.message);
+      } else {
+        setServerError("予期しないエラーが発生しました");
+      }
     }
   };
 

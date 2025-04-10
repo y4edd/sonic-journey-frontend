@@ -9,11 +9,12 @@ import DeleteConfirm from "@/components/user/DeleteConfirm/DeleteConfirm";
 import Information from "@/components/user/Information/Information";
 import UserDetail from "@/components/user/UserDetail/UserDetail";
 import type { UserData } from "@/types/user";
-import { fetchUser, fetchUserInfo } from "@/utils/apiFunc";
+import { fetchUser } from "@/utils/apiFunc";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import styles from "./page.module.css";
+import { deleteUser, fetchUserInfo } from "@/utils/apiFunc/user";
 
 const Info = () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ const Info = () => {
   const loadUser = async () => {
     try {
       const data = await fetchUser();
-      if (data?.id) {
+      if (data.id) {
         setUserId(data.id);
       } else {
         setUserId(null);
@@ -49,7 +50,6 @@ const Info = () => {
         setUserData(undefined);
       }
     } catch (error) {
-      console.log(error);
       setServerError("ユーザー情報の取得に失敗しました");
     } finally {
       setLoading(false);
@@ -84,28 +84,28 @@ const Info = () => {
     if (isButtonDisabled) return;
     setIsButtonDisabled(true);
     try {
-      const response = await fetch("/api/user/delete", {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        const error = await response.json();
-        setServerError(error.message);
-      }
-      toast.success("退会が完了しました！", {
-        position: "top-center",
-        autoClose: 1000,
-        closeButton: true,
-        hideProgressBar: true,
-        closeOnClick: true,
-        theme: "colored",
-      });
-      setTimeout(() => {
-        router.push("/");
-      }, 1500);
+      const response = await deleteUser();
+      console.log("response", response);
 
-      router.push("/");
+      if(response?.ok) {
+        toast.success("退会が完了しました！", {
+          position: "top-center",
+          autoClose: 1000,
+          closeButton: true,
+          hideProgressBar: true,
+          closeOnClick: true,
+          theme: "colored",
+        });
+        setTimeout(() => {
+          router.push("/");
+        }, 1500);
+  
+        router.push("/");
+      } else {
+        const res = await response?.json();
+        setServerError(res.message);
+      }
     } catch (error) {
-      console.log(error);
       setServerError("アカウントの削除に失敗しました");
     }
   };

@@ -1,5 +1,6 @@
 "use client";
 
+import { logout } from "@/utils/apiFunc/auth";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -11,25 +12,18 @@ export const useLogout: UseLogout = () => {
   const router = useRouter();
   const logoutUser = async () => {
     try {
-      const response = await fetch("/api/user/logout", {
-        method: "POST",
+      await logout();
+      toast.success("ログアウトが完了しました！", {
+        position: "top-center",
+        autoClose: 1000,
+        closeButton: true,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
       });
-
-      if (response.ok) {
-        toast.success("ログアウトが完了しました！", {
-          position: "top-center",
-          autoClose: 1000,
-          closeButton: true,
-          hideProgressBar: true,
-          closeOnClick: true,
-          theme: "colored",
-        });
-        setTimeout(() => {
-          router.push("/");
-        }, 500);
-      } else {
-        toast.error("ログアウトに失敗しました。もう一度お試しください。");
-      }
+      setTimeout(() => {
+        router.push("/");
+      }, 500);
     } catch {
       toast.error("サーバーエラーが発生しました。");
     }

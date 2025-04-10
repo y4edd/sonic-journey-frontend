@@ -27,7 +27,7 @@ const PlayHistory = async () => {
   );
 
   const playHistorySongs = playHistories.map((playHistorySong) => {
-    return playHistorySong.resSongData;
+    return playHistorySong;
   });
 
   return (

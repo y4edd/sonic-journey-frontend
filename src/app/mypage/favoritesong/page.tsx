@@ -18,11 +18,6 @@ type favoriteSong = {
 const FavoriteSongs = async () => {
   // NOTE: cookieからtokenを取得し、ログインしているか確認
   const token = await getTokenFromCookie();
-  const isLoggedin = await checkLoggedInServer(token);
-
-  if (!isLoggedin) {
-    return <UnauthorizedAccess />;
-  }
 
   // NOTE: DBからお気に入り楽曲を取得
   const favoriteSongs: { resultData: favoriteSong[] } = await getFavoriteSongs(token);

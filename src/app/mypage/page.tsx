@@ -2,7 +2,7 @@ import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAcce
 import Logout from "@/components/mypage/Logout/Logout";
 import MenuBox from "@/components/mypage/MenuBox/MenuBox";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { checkLoggedInServer, getUserId } from "@/utils/apiFunc";
+import { getUserId } from "@/utils/apiFunc";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import HistoryIcon from "@mui/icons-material/History";
@@ -14,11 +14,6 @@ import styles from "./page.module.css";
 const MyPage = async () => {
   // NOTE: cookieからtokenを取得し、ログインしているか確認
   const token = await getTokenFromCookie();
-  const isLoggedin = await checkLoggedInServer(token);
-
-  if (!isLoggedin) {
-    return <UnauthorizedAccess />;
-  }
 
   const userId = await getUserId(token);
 

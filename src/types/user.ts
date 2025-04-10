@@ -13,6 +13,11 @@ export type UserData = {
   password: string;
 };
 
+export type loginData = {
+  email: string;
+  password: string;
+}
+
 export type FormInputProps = {
   label: string;
   id: string;

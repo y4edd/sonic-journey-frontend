@@ -1,6 +1,7 @@
 "use client";
 
 import type { FormData } from "@/types/user";
+import { SignUp } from "@/utils/apiFunc/user";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -11,44 +12,31 @@ type UserRegister = () => {
 };
 
 export const userRegister: UserRegister = () => {
+   const router = useRouter();
   const [serverError, setServerError] = useState<string>("");
-
-  const router = useRouter();
 
   const RegisterUser = async (data: FormData) => {
     try {
-      const response = await fetch("/api/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          password: data.password,
-        }),
+      setServerError("");
+      // 外部宣言の非同期関数を呼び出す
+      await SignUp(data);
+      toast.success("アカウント登録が完了しました！", {
+        position: "top-center",
+        autoClose: 1000,
+        closeButton: true,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "colored",
       });
-
-      if (!response.ok) {
-        // 詳細なエラーメッセージ取得
-        const error = await response.json();
-        setServerError(error.message);
-      } else {
-        toast.success("アカウント登録が完了しました！", {
-          position: "top-center",
-          autoClose: 1000,
-          closeButton: true,
-          hideProgressBar: true,
-          closeOnClick: true,
-          theme: "colored",
-        });
-        setTimeout(() => {
-          router.push("/user/login");
-        }, 1500);
-      }
+      setTimeout(() => {
+        router.push("/user/login");
+      }, 1000);
     } catch (err) {
-      console.log(err);
-      setServerError("予期せぬエラーが発生しました");
+      if (err instanceof Error) {
+        setServerError(err.message);
+      } else {
+        setServerError("予期しないエラーが発生しました");
+      }
     }
   };
   return {
