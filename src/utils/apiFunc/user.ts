@@ -1,7 +1,6 @@
-import { FormData } from "@/types/user";
+import type { FormData } from "@/types/user";
 
 export const SignUp = async (data: FormData) => {
-
   const response = await fetch("http://localhost:3005/user", {
     method: "POST",
     headers: {
@@ -19,7 +18,7 @@ export const SignUp = async (data: FormData) => {
     const error = await response.json();
     throw new Error(error.message);
   }
-}
+};
 
 // ユーザー情報を取得する非同期処理
 export const fetchUserInfo = async () => {
@@ -43,8 +42,8 @@ export const patchUser = async (data: FormData) => {
       method: "PATCH",
       // 送るならheaders必要
       headers: {
-        "Content-Type": "application/json"
-      },     
+        "Content-Type": "application/json",
+      },
       credentials: "include",
       body: JSON.stringify(data),
     });
@@ -56,13 +55,12 @@ export const patchUser = async (data: FormData) => {
   } catch (error) {
     console.error(error);
   }
-}
-
+};
 
 export const deleteUser = async () => {
   try {
     const response = await fetch("http://localhost:3005/user/me", {
-      method: "DELETE",  
+      method: "DELETE",
       credentials: "include",
     });
     if (!response.ok) {
@@ -73,4 +71,4 @@ export const deleteUser = async () => {
   } catch (error) {
     console.error(error);
   }
-}
+};

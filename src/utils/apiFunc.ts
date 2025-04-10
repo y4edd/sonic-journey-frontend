@@ -53,8 +53,7 @@ export const fetchUser = async () => {
   try {
     const response = await fetch("/api/user/checkLogin", {
       credentials: "include",
-    }
-    );
+    });
     if (!response.ok) {
       throw new Error("ログイン状態が確認できませんでした");
     }
@@ -127,7 +126,6 @@ export const getUserId = async (token: string) => {
     return error;
   }
 };
-
 
 // DBからお気に入り楽曲の楽曲idと更新日を取得する関数（userIdを引数にとる）
 export const getFavoriteSongsForFav = async (userId: string) => {

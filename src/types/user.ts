@@ -16,7 +16,7 @@ export type UserData = {
 export type loginData = {
   email: string;
   password: string;
-}
+};
 
 export type FormInputProps = {
   label: string;

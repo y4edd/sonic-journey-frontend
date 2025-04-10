@@ -1,6 +1,6 @@
-import { loginData } from "@/types/user";
+import type { loginData } from "@/types/user";
 
-export const login = async(data: loginData) => {
+export const login = async (data: loginData) => {
   const response = await fetch("http://localhost:3005/auth/login", {
     method: "POST",
     headers: {
@@ -19,7 +19,7 @@ export const login = async(data: loginData) => {
   }
 };
 
-export const logout = async() => {
+export const logout = async () => {
   const response = await fetch("http://localhost:3005/auth/logout", {
     method: "POST",
     headers: {

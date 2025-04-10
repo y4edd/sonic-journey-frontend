@@ -8,13 +8,13 @@ import Guide from "@/components/user/Guide/Guide";
 import Information from "@/components/user/Information/Information";
 import { loginSchema } from "@/lib/validation";
 import type { FormData, loginData } from "@/types/user";
+import { login } from "@/utils/apiFunc/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import styles from "./page.module.css";
-import { login } from "@/utils/apiFunc/auth";
 
 const Login = () => {
   const [serverError, setServerError] = useState<string | null>(null);
@@ -31,10 +31,11 @@ const Login = () => {
 
   // オートフィル後のDOMから値を読み取り、それをRHFに流し込む
   // （RHFがオートフィルの値を取得しないため）
+  // biome-ignore lint/correctness/useExhaustiveDependencies:
   useEffect(() => {
     const emailInput = document.querySelector<HTMLInputElement>("input[name='email']");
     const passwordInput = document.querySelector<HTMLInputElement>("input[name='password']");
-  
+
     setTimeout(() => {
       if (emailInput?.value) {
         setValue("email", emailInput.value);

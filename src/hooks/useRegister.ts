@@ -12,7 +12,7 @@ type UserRegister = () => {
 };
 
 export const userRegister: UserRegister = () => {
-   const router = useRouter();
+  const router = useRouter();
   const [serverError, setServerError] = useState<string>("");
 
   const RegisterUser = async (data: FormData) => {

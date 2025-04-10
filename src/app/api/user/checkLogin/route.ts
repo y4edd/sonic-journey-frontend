@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { type JwtPayload } from "jsonwebtoken";
 import { type NextRequest, NextResponse } from "next/server";
 
 // ログイン状態の確認（返り値はid）

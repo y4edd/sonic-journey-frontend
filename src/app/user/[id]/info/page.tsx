@@ -10,11 +10,11 @@ import Information from "@/components/user/Information/Information";
 import UserDetail from "@/components/user/UserDetail/UserDetail";
 import type { UserData } from "@/types/user";
 import { fetchUser } from "@/utils/apiFunc";
+import { deleteUser, fetchUserInfo } from "@/utils/apiFunc/user";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import styles from "./page.module.css";
-import { deleteUser, fetchUserInfo } from "@/utils/apiFunc/user";
 
 const Info = () => {
   const [loading, setLoading] = useState(true);
@@ -49,7 +49,7 @@ const Info = () => {
       } else {
         setUserData(undefined);
       }
-    } catch (error) {
+    } catch (_error) {
       setServerError("ユーザー情報の取得に失敗しました");
     } finally {
       setLoading(false);
@@ -87,7 +87,7 @@ const Info = () => {
       const response = await deleteUser();
       console.log("response", response);
 
-      if(response?.ok) {
+      if (response?.ok) {
         toast.success("退会が完了しました！", {
           position: "top-center",
           autoClose: 1000,
@@ -99,13 +99,13 @@ const Info = () => {
         setTimeout(() => {
           router.push("/");
         }, 1500);
-  
+
         router.push("/");
       } else {
         const res = await response?.json();
         setServerError(res.message);
       }
-    } catch (error) {
+    } catch (_error) {
       setServerError("アカウントの削除に失敗しました");
     }
   };

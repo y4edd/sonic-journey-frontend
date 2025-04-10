@@ -75,7 +75,7 @@ const Edit = () => {
     loadUser();
     loadUserInfo();
     const passwordInput = document.querySelector<HTMLInputElement>("input[name='password']");
-  
+
     setTimeout(() => {
       if (passwordInput?.value) {
         userInfo.password = passwordInput.value;
@@ -94,7 +94,7 @@ const Edit = () => {
     try {
       const response = await patchUser(data);
 
-      if(response?.ok) {
+      if (response?.ok) {
         toast.success("アカウント情報の編集が完了しました", {
           position: "top-center",
           autoClose: 1000,
