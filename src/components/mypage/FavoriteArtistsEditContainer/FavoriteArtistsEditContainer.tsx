@@ -1,12 +1,12 @@
 "use client";
 import type { DeezerArtist } from "@/types/deezer";
-import { deleteFavoriteArtists } from "@/utils/favoriteArtist";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ActionButton from "../ActionButton/ActionButton";
 import SelectableArtistList from "../SelectableArtistList/SelectableArtistList";
 import styles from "./FavoriteArtistsEditContainer.module.css";
+import { deleteFavotriteArtist } from "@/utils/apiFunc/favorite";
 
 type ArtistInfo = {
   artistId: number;
@@ -34,7 +34,7 @@ const FavoriteArtistsEditContainer = ({ artistsInfo }: { artistsInfo: ArtistInfo
   };
 
   const handleDisableButtonClick = async () => {
-    await deleteFavoriteArtists(selectedArtists);
+    await deleteFavotriteArtist(selectedArtists);
     // router.refresh()後に state を保持しないように初期値をセットする
     setSelectedArtists([]);
     setIsButtonDisabled(true);

@@ -31,28 +31,8 @@ export const getFavoriteSongs = async (token: string) => {
   }
 };
 
-// DBからお気に入り楽曲の楽曲idと更新日を取得する関数（userIdを引数にとる）
-export const getFavoriteSongsForFav = async (userId: string) => {
-  try {
-    const res = await fetch("http://localhost:3000/api/getFavoriteSongsForFav", {
-      method: "POST",
-      cache: "no-cache",
-      body: JSON.stringify({ userId }),
-    });
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error("データが見つかりませんでした");
-    }
-
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 // お気に入り楽曲を削除する関数
-// 注意: cookieの認証があるためサーバーサイドからは呼び出せない
+// 注意:　CSR用
 export const deleteFavoriteSongs = async (songIds: number[]) => {
   try {
     const res = await fetch("http://localhost:3005/favorite/song", {
@@ -61,35 +41,37 @@ export const deleteFavoriteSongs = async (songIds: number[]) => {
       body: JSON.stringify({ songIds }),
       credentials: "include",
     });
-
     if (!res.ok) {
       throw new Error("お気に入り楽曲の削除に失敗しました");
     }
-
-    return await res.json();
+    return res;
   } catch (error) {
     console.error(error);
   }
 };
 
-// DBからお気に入りアーティストのアーティストIDと更新日を取得する関数（userIdを引数にとる）
-export const getFavoriteArtistsForFav = async () => {
+// DBからお気に入りアーティストのアーティストIDと更新日を取得する関数
+// サーバーサイドでのみ使用すること
+export const getFavoriteArtistsForFav = async (token: string) => {
   try {
-    const res = await fetch("http://localhost:3005/favorite/artist", {
-      credentials: "include",
+    const response = await fetch("http://localhost:3005/favorite/artist", {
+      headers: {
+        Authorization: `${token}`,
+      },
     });
+    const res = await response.json();
 
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error("データが見つかりませんでした");
     }
 
-    return await res.json();
+    return res;
   } catch (error) {
     console.error(error);
   }
 };
 
-export const deleteFavotriteArtist = async (id: number) => {
+export const deleteFavotriteArtist = async (id: number[]) => {
   try {
     const response = await fetch("http://localhost:3005/favorite/artist", {
       method: "DELETE",
@@ -97,7 +79,7 @@ export const deleteFavotriteArtist = async (id: number) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        artistIds: [id],
+        artistIds: id,
       }),
       credentials: "include",
     });

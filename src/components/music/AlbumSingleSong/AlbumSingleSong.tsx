@@ -1,8 +1,7 @@
 "use client";
 
 import { useAlbumAudio } from "@/context/AlbumAudioContext";
-import { fetchUser } from "@/utils/apiFunc";
-import { getFavoriteSongsForFav, postSong } from "@/utils/apiFunc/favorite";
+import { deleteFavoriteSongs, postSong } from "@/utils/apiFunc/favorite";
 import { savePlayHistory } from "@/utils/history";
 import DoneIcon from "@mui/icons-material/Done";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -19,13 +18,6 @@ type AlbumSingleSongProps = {
   title: string;
   preview: string;
   favSongIDs: favoriteSong[];
-};
-
-type FavoriteSongs = {
-  resultData: {
-    songId: number;
-    updatedAt: Date;
-  }[];
 };
 
 const AlbumSingleSong = ({ id, num, title, preview, favSongIDs }: AlbumSingleSongProps) => {
@@ -77,19 +69,9 @@ const AlbumSingleSong = ({ id, num, title, preview, favSongIDs }: AlbumSingleSon
   // お気に入り楽曲削除
   const deleteFavorite = async () => {
     try {
-      const response = await fetch("/api/favorite/songs", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          songIds: [id],
-        }),
-      });
-      if (!response.ok) {
-        const error = await response.json();
-        console.error(error);
-        alert(error.message);
+      const response = await deleteFavoriteSongs([id]);
+      if (!response) {
+        console.error(response);
         return;
       }
 

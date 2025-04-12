@@ -1,19 +1,16 @@
 export const dynamic = "force-dynamic"; // 動的レンダリングを強制する
 
 import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAccess";
+import ArtistInfo from "@/components/music/ArtistInfo/ArtistInfo";
 import FavoriteArtistsContainer from "@/components/mypage/FavoriteArtistsContainer/FavoriteArtistsContainer";
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import BreadList from "@/components/top/BreadList/BreadList";
-import type { DeezerArtist } from "@/types/deezer";
+import { favoriteArtist } from "@/types/favorite";
 import { checkLoggedInServer } from "@/utils/apiFunc";
 import { getArtist } from "@/utils/apiFunc/artist";
-import { getFavoriteArtists } from "@/utils/favoriteArtist";
+import { getFavoriteArtistsForFav } from "@/utils/apiFunc/favorite";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 
-type favoriteArtist = {
-  artistId: number;
-  updatedAt: Date;
-};
 
 const FavoriteArtist = async () => {
   // NOTE: cookieからtokenを取得し、ログインしているか確認
@@ -25,13 +22,13 @@ const FavoriteArtist = async () => {
   }
 
   // NOTE: DBからお気に入りアーティストを取得
-  const favoriteArtists: { resultData: favoriteArtist[] } = await getFavoriteArtists(token);
+  const favoriteArtists = await getFavoriteArtistsForFav(token);
 
   // NOTE: アーティストidをもとにアーティスト情報を取得してデータに追加
   const favoriteArtistsData = await Promise.all(
-    favoriteArtists.resultData.map(async (artist) => {
-      const artistData: { resArtistData: DeezerArtist } = await getArtist(artist.artistId);
-      return { ...artist, artistData: artistData.resArtistData };
+    favoriteArtists.map(async (artist: favoriteArtist) => {
+      const artistData = await getArtist(Number(artist.api_artist_id));
+      return { ...artist, artistData: artistData };
     }),
   );
 

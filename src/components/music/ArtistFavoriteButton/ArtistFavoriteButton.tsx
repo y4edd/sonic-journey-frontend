@@ -4,16 +4,14 @@ import DoneIcon from "@mui/icons-material/Done";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useEffect, useState } from "react";
 import styles from "./ArtistFavoriteButton.module.css";
-import { deleteFavotriteArtist, getFavoriteArtistsForFav, postFavoriteArtist } from "@/utils/apiFunc/favorite";
+import { deleteFavotriteArtist, postFavoriteArtist } from "@/utils/apiFunc/favorite";
 import { favoriteArtist } from "@/types/favorite";
 
-const ArtistFavoriteButton = ({ id }: { id: number }) => {
+const ArtistFavoriteButton = ({ id, favoriteArtists }: { id: number, favoriteArtists: favoriteArtist[] }) => {
   const [isFav, setIsFav] = useState<boolean>(false);
 
   // NOTE: DBから取得したお気に入り楽曲とidを比較し、お気に入りボタンの表示を変える
   const doneFav = async () => {
-    // NOTE: DBからお気に入りアーティストを取得。
-    const favoriteArtists = await getFavoriteArtistsForFav();
     const ArtistIds = favoriteArtists.map((artist: favoriteArtist) => Number(artist.api_artist_id));
 
     if (ArtistIds.includes(id)) {
@@ -38,7 +36,7 @@ const ArtistFavoriteButton = ({ id }: { id: number }) => {
 
   const handleDelete = async (id: number) => {
     try {
-      const response = await deleteFavotriteArtist(id);
+      const response = await deleteFavotriteArtist([id]);
       alert("お気に入りアーティストから削除されました");
       setIsFav(false);
     } catch (error) {
