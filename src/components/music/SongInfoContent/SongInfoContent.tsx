@@ -1,11 +1,11 @@
+import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
+import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import Image from "next/image";
 import Link from "next/link";
 import { AddPlaylist } from "../AddPlaylist/AddPlaylist";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import SongAudio from "../SongAudio/SongAudio";
 import styles from "./SongInfoContent.module.css";
-import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
-import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 
 type SongInfoContentProps = {
   id: number;
@@ -16,7 +16,14 @@ type SongInfoContentProps = {
   albumId: number;
 };
 
-const SongInfoContent = async({ id, title, artist, image, preview, albumId }: SongInfoContentProps) => {
+const SongInfoContent = async ({
+  id,
+  title,
+  artist,
+  image,
+  preview,
+  albumId,
+}: SongInfoContentProps) => {
   // NOTE: DBからお気に入り楽曲を取得。
   const token = await getTokenFromCookie();
   const favoriteSongIDs = await getFavoriteSongs(token);

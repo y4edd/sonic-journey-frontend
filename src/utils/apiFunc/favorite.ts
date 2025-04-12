@@ -100,7 +100,7 @@ export const postFavoriteArtist = async (id: number) => {
       method: "POST",
       credentials: "include",
     });
-  
+
     if (!response.ok) {
       const error = await response.json();
       console.error(error);

@@ -3,12 +3,12 @@ import FavoriteArtistsEditContainer from "@/components/mypage/FavoriteArtistsEdi
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import BreadList from "@/components/top/BreadList/BreadList";
 import type { DeezerArtist } from "@/types/deezer";
+import type { favoriteArtist } from "@/types/favorite";
 import { checkLoggedInServer } from "@/utils/apiFunc";
 import { getArtist } from "@/utils/apiFunc/artist";
+import { getFavoriteArtistsForFav } from "@/utils/apiFunc/favorite";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import styles from "./page.module.css";
-import { getFavoriteArtistsForFav } from "@/utils/apiFunc/favorite";
-import { favoriteArtist } from "@/types/favorite";
 
 const EditFavoriteArtists = async () => {
   // ログイン確認をする
@@ -25,7 +25,7 @@ const EditFavoriteArtists = async () => {
   // アーティストidをもとにアーティスト情報を取得してデータに追加する
   const favoriteArtistsData = await Promise.all(
     favoriteArtists.map(async (artist: favoriteArtist) => {
-      const artistData: DeezerArtist  = await getArtist(Number(artist.api_artist_id));
+      const artistData: DeezerArtist = await getArtist(Number(artist.api_artist_id));
       return { ...artist, artistData: artistData };
     }),
   );

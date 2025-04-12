@@ -1,6 +1,7 @@
 "use client";
 
 import { useAlbumAudio } from "@/context/AlbumAudioContext";
+import type { favoriteSong } from "@/types/favorite";
 import { deleteFavoriteSongs, postSong } from "@/utils/apiFunc/favorite";
 import { savePlayHistory } from "@/utils/history";
 import DoneIcon from "@mui/icons-material/Done";
@@ -10,7 +11,6 @@ import { useEffect, useState } from "react";
 import { AddPlaylist } from "../AddPlaylist/AddPlaylist";
 import AlbumSingleSongAudio from "../AlbumSingleSongAudio/AlbumSingleSongAudio";
 import styles from "./AlbumSingleSong.module.css";
-import { favoriteSong } from "@/types/favorite";
 
 type AlbumSingleSongProps = {
   id: number;

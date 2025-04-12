@@ -2,9 +2,9 @@
 
 import { AlbumAudioProvider } from "@/context/AlbumAudioContext";
 import type { AlbumSingle } from "@/types/deezer";
+import type { favoriteSong } from "@/types/favorite";
 import AlbumSingleSong from "../AlbumSingleSong/AlbumSingleSong";
 import styles from "./AlbumSingles.module.css";
-import { favoriteSong } from "@/types/favorite";
 
 type AlbumSong = {
   id: number;
@@ -12,7 +12,10 @@ type AlbumSong = {
   preview: string;
 };
 
-const AlbumSingles = ({ singles, favSongIDs }: { singles: AlbumSingle[], favSongIDs:favoriteSong[] }) => {
+const AlbumSingles = ({
+  singles,
+  favSongIDs,
+}: { singles: AlbumSingle[]; favSongIDs: favoriteSong[] }) => {
   return (
     // Providerでラップすると、子孫コンポーネントがコンテキストにアクセスできるようになる
     <AlbumAudioProvider>

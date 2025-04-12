@@ -1,12 +1,12 @@
 "use client";
 import type { DeezerArtist } from "@/types/deezer";
+import { deleteFavotriteArtist } from "@/utils/apiFunc/favorite";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ActionButton from "../ActionButton/ActionButton";
 import SelectableArtistList from "../SelectableArtistList/SelectableArtistList";
 import styles from "./FavoriteArtistsEditContainer.module.css";
-import { deleteFavotriteArtist } from "@/utils/apiFunc/favorite";
 
 type ArtistInfo = {
   artistId: number;

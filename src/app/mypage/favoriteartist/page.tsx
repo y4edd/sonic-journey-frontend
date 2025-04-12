@@ -1,16 +1,14 @@
 export const dynamic = "force-dynamic"; // 動的レンダリングを強制する
 
 import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAccess";
-import ArtistInfo from "@/components/music/ArtistInfo/ArtistInfo";
 import FavoriteArtistsContainer from "@/components/mypage/FavoriteArtistsContainer/FavoriteArtistsContainer";
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { favoriteArtist } from "@/types/favorite";
+import type { favoriteArtist } from "@/types/favorite";
 import { checkLoggedInServer } from "@/utils/apiFunc";
 import { getArtist } from "@/utils/apiFunc/artist";
 import { getFavoriteArtistsForFav } from "@/utils/apiFunc/favorite";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
-
 
 const FavoriteArtist = async () => {
   // NOTE: cookieからtokenを取得し、ログインしているか確認

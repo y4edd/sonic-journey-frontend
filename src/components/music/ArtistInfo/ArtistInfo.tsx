@@ -1,10 +1,10 @@
+import { getFavoriteArtistsForFav } from "@/utils/apiFunc/favorite";
+import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import Image from "next/image";
 import ArtistFavoriteButton from "../ArtistFavoriteButton/ArtistFavoriteButton";
 import styles from "./ArtistInfo.module.css";
-import { getFavoriteArtistsForFav } from "@/utils/apiFunc/favorite";
-import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 
-const ArtistInfo = async({ image, name, id }: { image: string; name: string; id: number }) => {
+const ArtistInfo = async ({ image, name, id }: { image: string; name: string; id: number }) => {
   const userId = await getTokenFromCookie();
   // NOTE: DBからお気に入りアーティストを取得。
   const favoriteArtists = await getFavoriteArtistsForFav(userId);

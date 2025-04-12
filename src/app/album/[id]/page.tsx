@@ -6,11 +6,11 @@ import PlayHistory from "@/components/music/PlayHistory/PlayHistory";
 import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
 import { getAlbum } from "@/utils/apiFunc/album";
+import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
 import { getArtistSongs } from "@/utils/apiFunc/song";
+import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import styles from "./page.module.css";
-import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
-import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 
 type AlbumPageProps = {
   params: Promise<{ id: string }>;

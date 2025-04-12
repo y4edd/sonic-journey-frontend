@@ -1,13 +1,16 @@
 "use client";
 
+import type { favoriteArtist } from "@/types/favorite";
+import { deleteFavotriteArtist, postFavoriteArtist } from "@/utils/apiFunc/favorite";
 import DoneIcon from "@mui/icons-material/Done";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useEffect, useState } from "react";
 import styles from "./ArtistFavoriteButton.module.css";
-import { deleteFavotriteArtist, postFavoriteArtist } from "@/utils/apiFunc/favorite";
-import { favoriteArtist } from "@/types/favorite";
 
-const ArtistFavoriteButton = ({ id, favoriteArtists }: { id: number, favoriteArtists: favoriteArtist[] }) => {
+const ArtistFavoriteButton = ({
+  id,
+  favoriteArtists,
+}: { id: number; favoriteArtists: favoriteArtist[] }) => {
   const [isFav, setIsFav] = useState<boolean>(false);
 
   // NOTE: DBから取得したお気に入り楽曲とidを比較し、お気に入りボタンの表示を変える
@@ -36,7 +39,7 @@ const ArtistFavoriteButton = ({ id, favoriteArtists }: { id: number, favoriteArt
 
   const handleDelete = async (id: number) => {
     try {
-      const response = await deleteFavotriteArtist([id]);
+      await deleteFavotriteArtist([id]);
       alert("お気に入りアーティストから削除されました");
       setIsFav(false);
     } catch (error) {
@@ -49,14 +52,22 @@ const ArtistFavoriteButton = ({ id, favoriteArtists }: { id: number, favoriteArt
     <>
       {isFav ? (
         <>
-          <button type="button" className={styles.artistInfoAddedFavorite} onClick={() => handleDelete(id)}>
+          <button
+            type="button"
+            className={styles.artistInfoAddedFavorite}
+            onClick={() => handleDelete(id)}
+          >
             <DoneIcon />
             お気に入りに追加済み
           </button>
         </>
       ) : (
         <>
-          <button type="button" className={styles.artistInfoAddFavorite} onClick={() =>postFavorite(id)}>
+          <button
+            type="button"
+            className={styles.artistInfoAddFavorite}
+            onClick={() => postFavorite(id)}
+          >
             <FavoriteBorderIcon />
             お気に入りに追加
           </button>
