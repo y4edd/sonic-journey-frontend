@@ -1,32 +1,26 @@
 export const dynamic = "force-dynamic"; // 動的レンダリングを強制する
 
-import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAccess";
 import FavoriteSongsContainer from "@/components/mypage/FavoriteSongsContainer/FavoriteSongsContainer";
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import BreadList from "@/components/top/BreadList/BreadList";
 import type { DeezerSong } from "@/types/deezer";
-import { checkLoggedInServer } from "@/utils/apiFunc";
+import { favoriteSong } from "@/types/favorite";
+import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
 import { getSong } from "@/utils/apiFunc/song";
-import { getFavoriteSongs } from "@/utils/favoriteSong";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
-
-type favoriteSong = {
-  songId: number;
-  updatedAt: Date;
-};
 
 const FavoriteSongs = async () => {
   // NOTE: cookieからtokenを取得し、ログインしているか確認
   const token = await getTokenFromCookie();
 
   // NOTE: DBからお気に入り楽曲を取得
-  const favoriteSongs: { resultData: favoriteSong[] } = await getFavoriteSongs(token);
+  const favoriteSongs = await getFavoriteSongs(token);
 
   // NOTE: お気に入り楽曲の楽曲idをもとに、楽曲情報を取得してデータに加える
   const favoriteSongsData = await Promise.all(
-    favoriteSongs.resultData.map(async (song) => {
-      const songData: { resSongData: DeezerSong } = await getSong(song.songId.toString());
-      return { ...song, songData: songData.resSongData };
+    favoriteSongs.map(async (song: favoriteSong) => {
+      const songData: DeezerSong  = await getSong(song.api_song_id);
+      return { ...song, songData: songData };
     }),
   );
 

@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic"; // 動的レンダリングを強制す�
 import { ChartTitle } from "@/components/newChart/ChartTitle/ChartTitle";
 import { Song } from "@/components/newChart/Song/Song";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { getNewSongs } from "@/utils/apiFunc";
+import { getNewSongs } from "@/utils/apiFunc/song";
 
 const Page = async () => {
   const getSongs = await getNewSongs(20);

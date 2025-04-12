@@ -1,7 +1,7 @@
 "use client";
 
 import { useAlbumAudio } from "@/context/AlbumAudioContext";
-import { fetchUser, getFavoriteSongsForFav } from "@/utils/apiFunc";
+import { fetchUser } from "@/utils/apiFunc";
 import { savePlayHistory } from "@/utils/history";
 import DoneIcon from "@mui/icons-material/Done";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { AddPlaylist } from "../AddPlaylist/AddPlaylist";
 import AlbumSingleSongAudio from "../AlbumSingleSongAudio/AlbumSingleSongAudio";
 import styles from "./AlbumSingleSong.module.css";
+import { getFavoriteSongsForFav, postSong } from "@/utils/apiFunc/favorite";
 
 type AlbumSingleSongProps = {
   id: number;
@@ -68,17 +69,7 @@ const AlbumSingleSong = ({ id, num, title, preview }: AlbumSingleSongProps) => {
   // 楽曲をお気に入り登録
   const postFavorite = async () => {
     try {
-      const response = await fetch("/api/favorite/songs", {
-        method: "POST",
-        body: JSON.stringify({ songId: id }),
-      });
-      if (!response.ok) {
-        const err = await response.json();
-        console.error(err);
-        alert(err.message);
-        return;
-      }
-      alert("お気に入りに登録されました");
+      await postSong(id);
       setIsFav(true);
     } catch (error) {
       console.error(error);

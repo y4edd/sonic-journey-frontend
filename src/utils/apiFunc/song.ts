@@ -91,3 +91,37 @@ export const getRankSingleSongs = async (limit: number) => {
     console.error(error);
   }
 };
+
+// 人気新着楽曲を取得する関数
+// limitには取得したい件数を入力
+export const getNewSongs = async (limit: number) => {
+  try {
+    const res = await fetch(`http://localhost:3005/song/new?limit=${limit}`, {
+      cache: "no-cache",
+    });
+
+    if (!res.ok) {
+      throw new Error("データが見つかりませんでした");
+    }
+
+    const result = await res.json();
+
+    if (result.length < limit && limit === 4) {
+      for (let i = 0; i <= limit - result.length; i++) {
+        result.push({
+          id: 0,
+          title: "title",
+          cover_xl: "/images/defaultsong.png",
+          release_date: "20xx-xx-xx",
+          artist: {
+            id: 1,
+            name: "artist",
+          },
+        });
+      }
+    }
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};

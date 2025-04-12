@@ -5,14 +5,11 @@ import BreadList from "@/components/top/BreadList/BreadList";
 import type { DeezerSong } from "@/types/deezer";
 import { checkLoggedInServer } from "@/utils/apiFunc";
 import { getSong } from "@/utils/apiFunc/song";
-import { getFavoriteSongs } from "@/utils/favoriteSong";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import styles from "./page.module.css";
+import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
+import { favoriteSong } from "@/types/favorite";
 
-type favoriteSong = {
-  songId: number;
-  updatedAt: Date;
-};
 
 const EditFavoriteSongs = async () => {
   // cookieからtokenを取得し、ログインしているか確認する
@@ -24,13 +21,13 @@ const EditFavoriteSongs = async () => {
   }
 
   // DBからお気に入り楽曲を取得する
-  const favoriteSongs: { resultData: favoriteSong[] } = await getFavoriteSongs(token);
+  const favoriteSongs = await getFavoriteSongs(token);
 
   // お気に入り楽曲の楽曲idをもとに、楽曲情報を取得してデータに加える
   const favoriteSongsData = await Promise.all(
-    favoriteSongs.resultData.map(async (song) => {
-      const songData: { resSongData: DeezerSong } = await getSong(song.songId.toString());
-      return { ...song, songData: songData.resSongData };
+    favoriteSongs.map(async (song: favoriteSong) => {
+      const songData: DeezerSong = await getSong(song.api_song_id);
+      return { ...song, songData: songData };
     }),
   );
 

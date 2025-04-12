@@ -10,7 +10,7 @@ export const GET = async (request: NextRequest) => {
   }
 
   // リクエストオブジェクトからクッキーを取得
-  const token = request.cookies.get("token");
+  const token = request.cookies.get("access_token");
 
   // トークンがなかった場合
   if (!token) {

@@ -57,7 +57,7 @@ export const GET = async (req: NextRequest) => {
 export const POST = async (req: NextRequest) => {
   try {
     // ログインユーザーのidを取得する
-    const token = req.cookies.get("token")?.value;
+    const token = req.cookies.get("access_token")?.value;
     if (!token) {
       return NextResponse.json({ message: "ログインが必要です" }, { status: 401 });
     }

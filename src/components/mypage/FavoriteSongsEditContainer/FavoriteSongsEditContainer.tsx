@@ -1,12 +1,12 @@
 "use client";
 import type { DeezerSong } from "@/types/deezer";
-import { deleteFavoriteSongs } from "@/utils/favoriteSong";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ActionButton from "../ActionButton/ActionButton";
 import SelectableSongList from "../SelectableSongList/SelectableSongList";
 import styles from "./FavoriteSongsEditContainer.module.css";
+import { deleteFavoriteSongs } from "@/utils/apiFunc/favorite";
 
 type FavoriteSongsEditContainerProps = {
   songsInfo: {
