@@ -92,8 +92,6 @@ export const getUserId = async (token: string) => {
   }
 };
 
-
-
 // DBからお気に入りアーティストのアーティストIDと更新日を取得する関数（userIdを引数にとる）
 export const getFavoriteArtistsForFav = async (userId: string) => {
   try {

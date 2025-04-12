@@ -1,4 +1,4 @@
-export const postSong = async(id: number) => {
+export const postSong = async (id: number) => {
   const response = await fetch(`http://localhost:3005/favorite/song/${id}`, {
     method: "POST",
     credentials: "include",
@@ -9,8 +9,7 @@ export const postSong = async(id: number) => {
     return;
   }
   alert("お気に入りに登録されました");
-}
-
+};
 
 // DBからお気に入り楽曲の楽曲idと更新日を取得する関数（Cookieのtokenを引数にとる）
 export const getFavoriteSongs = async (token: string) => {
@@ -19,9 +18,9 @@ export const getFavoriteSongs = async (token: string) => {
       // サーバーサイドのため、Authorizationヘッダーにtokenを乗っける
       headers: {
         Authorization: `${token}`,
-      },  
+      },
     });
-    
+
     const res = await response.json();
     if (!response.ok) {
       throw new Error("データが見つかりませんでした");

@@ -1,6 +1,5 @@
 // FavoriteSongテーブルを操作する関数群
 
-
 // お気に入り楽曲を削除する関数
 // 注意: cookieの認証があるためサーバーサイドからは呼び出せない
 export const deleteFavoriteSongs = async (songIds: number[]) => {

@@ -3,13 +3,12 @@ import FavoriteSongsEditContainer from "@/components/mypage/FavoriteSongsEditCon
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import BreadList from "@/components/top/BreadList/BreadList";
 import type { DeezerSong } from "@/types/deezer";
+import type { favoriteSong } from "@/types/favorite";
 import { checkLoggedInServer } from "@/utils/apiFunc";
+import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
 import { getSong } from "@/utils/apiFunc/song";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import styles from "./page.module.css";
-import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
-import { favoriteSong } from "@/types/favorite";
-
 
 const EditFavoriteSongs = async () => {
   // cookieからtokenを取得し、ログインしているか確認する

@@ -2,6 +2,7 @@
 
 import { useAlbumAudio } from "@/context/AlbumAudioContext";
 import { fetchUser } from "@/utils/apiFunc";
+import { getFavoriteSongsForFav, postSong } from "@/utils/apiFunc/favorite";
 import { savePlayHistory } from "@/utils/history";
 import DoneIcon from "@mui/icons-material/Done";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -10,7 +11,6 @@ import { useEffect, useState } from "react";
 import { AddPlaylist } from "../AddPlaylist/AddPlaylist";
 import AlbumSingleSongAudio from "../AlbumSingleSongAudio/AlbumSingleSongAudio";
 import styles from "./AlbumSingleSong.module.css";
-import { getFavoriteSongsForFav, postSong } from "@/utils/apiFunc/favorite";
 
 type AlbumSingleSongProps = {
   id: number;

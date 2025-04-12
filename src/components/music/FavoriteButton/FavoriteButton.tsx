@@ -1,11 +1,11 @@
 "use client";
 
 import { fetchUser } from "@/utils/apiFunc";
+import { getFavoriteSongsForFav } from "@/utils/apiFunc/favorite";
 import DoneIcon from "@mui/icons-material/Done";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useEffect, useState } from "react";
 import styles from "./FavoriteButton.module.css";
-import { getFavoriteSongsForFav } from "@/utils/apiFunc/favorite";
 
 type FavoriteSongs = {
   resultData: {
