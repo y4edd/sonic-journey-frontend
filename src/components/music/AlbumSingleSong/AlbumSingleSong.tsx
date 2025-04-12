@@ -11,12 +11,14 @@ import { useEffect, useState } from "react";
 import { AddPlaylist } from "../AddPlaylist/AddPlaylist";
 import AlbumSingleSongAudio from "../AlbumSingleSongAudio/AlbumSingleSongAudio";
 import styles from "./AlbumSingleSong.module.css";
+import { favoriteSong } from "@/types/favorite";
 
 type AlbumSingleSongProps = {
   id: number;
   num: number;
   title: string;
   preview: string;
+  favSongIDs: favoriteSong[];
 };
 
 type FavoriteSongs = {
@@ -26,7 +28,7 @@ type FavoriteSongs = {
   }[];
 };
 
-const AlbumSingleSong = ({ id, num, title, preview }: AlbumSingleSongProps) => {
+const AlbumSingleSong = ({ id, num, title, preview, favSongIDs }: AlbumSingleSongProps) => {
   const [isFav, setIsFav] = useState<boolean>(false);
   // コンテキストからstateを呼び出す
   const { currentlyPlayingId, setCurrentlyPlayingId } = useAlbumAudio();
@@ -50,11 +52,7 @@ const AlbumSingleSong = ({ id, num, title, preview }: AlbumSingleSongProps) => {
 
   // NOTE: DBから取得したお気に入り楽曲とidを比較し、お気に入りボタンの表示を変える
   const doneFav = async () => {
-    // NOTE: ログイン状態を確認し、userIdを返す
-    const userId: string = await fetchUser();
-    // NOTE: DBからお気に入り楽曲を取得。
-    const favoriteSongs: FavoriteSongs = await getFavoriteSongsForFav(userId);
-    const songIds = favoriteSongs.resultData.map((song) => song.songId);
+    const songIds = favSongIDs.map((song) => Number(song.api_song_id));
 
     if (songIds.includes(id)) {
       setIsFav(true);

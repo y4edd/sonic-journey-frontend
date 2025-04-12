@@ -9,6 +9,8 @@ import { getAlbum } from "@/utils/apiFunc/album";
 import { getArtistSongs } from "@/utils/apiFunc/song";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import styles from "./page.module.css";
+import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
+import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 
 type AlbumPageProps = {
   params: Promise<{ id: string }>;
@@ -25,6 +27,9 @@ const AlbumPage = async ({ params }: AlbumPageProps) => {
   // 上記で取得したアーティストIDからアーティストの人気楽曲を最大4件取得
   const artistSongs = await getArtistSongs(resultData.artist.id, 4);
 
+  const token = await getTokenFromCookie();
+
+  const favSongIDs = await getFavoriteSongs(token);
   return (
     <>
       <BreadList
@@ -45,7 +50,7 @@ const AlbumPage = async ({ params }: AlbumPageProps) => {
         </div>
         <div className={styles.albumSongsContent}>
           <MusicContentTitle title="収録楽曲" />
-          <AlbumSingles singles={resultData.albumSongs} />
+          <AlbumSingles singles={resultData.albumSongs} favSongIDs={favSongIDs} />
         </div>
         <div className={styles.artistInfoLinkContent}>
           <MusicContentTitle title="アーティスト情報" />

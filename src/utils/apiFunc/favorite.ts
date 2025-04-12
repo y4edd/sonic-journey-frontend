@@ -71,3 +71,61 @@ export const deleteFavoriteSongs = async (songIds: number[]) => {
     console.error(error);
   }
 };
+
+// DBからお気に入りアーティストのアーティストIDと更新日を取得する関数（userIdを引数にとる）
+export const getFavoriteArtistsForFav = async () => {
+  try {
+    const res = await fetch("http://localhost:3005/favorite/artist", {
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      throw new Error("データが見つかりませんでした");
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteFavotriteArtist = async (id: number) => {
+  try {
+    const response = await fetch("http://localhost:3005/favorite/artist", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        artistIds: [id],
+      }),
+      credentials: "include",
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      console.error(error);
+      alert(error.message);
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const postFavoriteArtist = async (id: number) => {
+  try {
+    const response = await fetch(`http://localhost:3005/favorite/artist/${id}`, {
+      method: "POST",
+      credentials: "include",
+    });
+  
+    if (!response.ok) {
+      const error = await response.json();
+      console.error(error);
+      alert(error.message);
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};

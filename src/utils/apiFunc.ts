@@ -92,21 +92,3 @@ export const getUserId = async (token: string) => {
   }
 };
 
-// DBからお気に入りアーティストのアーティストIDと更新日を取得する関数（userIdを引数にとる）
-export const getFavoriteArtistsForFav = async (userId: string) => {
-  try {
-    const res = await fetch("http://localhost:3000/api/getFavoriteArtistsForFav", {
-      method: "POST",
-      cache: "no-cache",
-      body: JSON.stringify({ userId }),
-    });
-
-    if (!res.ok) {
-      throw new Error("データが見つかりませんでした");
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error(error);
-  }
-};
