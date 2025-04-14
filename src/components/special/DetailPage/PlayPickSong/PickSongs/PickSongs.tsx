@@ -3,7 +3,7 @@
 import AlbumSingleSongAudio from "@/components/music/AlbumSingleSongAudio/AlbumSingleSongAudio";
 import { useAlbumAudio } from "@/context/AlbumAudioContext";
 import type { DeezerTrackSong } from "@/types/deezer";
-import { savePlayHistory } from "@/utils/history";
+import { savePlayHistory } from "@/utils/apiFunc/history";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Image from "next/image";
 import Link from "next/link";

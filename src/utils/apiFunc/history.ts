@@ -2,9 +2,10 @@
 // songIdには保存したい楽曲のIDを入力
 export const savePlayHistory = async (songId: number) => {
   try {
-    const res = await fetch("http://localhost:3000/api/savePlayHistory", {
+    const res = await fetch("http://localhost:3005/history", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ songId }),
     });
 
@@ -17,20 +18,19 @@ export const savePlayHistory = async (songId: number) => {
 };
 
 // ログインユーザーの試聴履歴の楽曲idを取得する関数
-export const getPlayHistory = async (token: string, take: number) => {
+export const getPlayHistory = async (token: string, limit: number) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/getPlayHistory?take=${take}`, {
+    const response = await fetch(`http://localhost:3005/history?limit=${limit}`, {
       cache: "no-cache",
       headers: {
-        Cookie: token,
+        Authorization: `${token}`,
       },
     });
-
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error("再生履歴の取得に失敗しました");
     }
-
-    return await res.json();
+    const res = await response.json();
+    return res;
   } catch (error) {
     console.error(error);
   }
@@ -39,11 +39,10 @@ export const getPlayHistory = async (token: string, take: number) => {
 // 再生履歴を削除する関数
 export const deletePlayHistory = async (userId: string) => {
   try {
-    const res = await fetch("http://localhost:3000/api/deletePlayHistory", {
+    const res = await fetch("http://localhost:3005/history", {
       cache: "no-cache",
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId }),
+      headers: { Authorization: `${userId}` },
     });
     if (!res.ok) {
       throw new Error("再生履歴の削除に失敗しました");

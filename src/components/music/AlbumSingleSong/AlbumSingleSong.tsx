@@ -3,7 +3,7 @@
 import { useAlbumAudio } from "@/context/AlbumAudioContext";
 import type { favoriteSong } from "@/types/favorite";
 import { deleteFavoriteSongs, postSong } from "@/utils/apiFunc/favorite";
-import { savePlayHistory } from "@/utils/history";
+import { savePlayHistory } from "@/utils/apiFunc/history";
 import DoneIcon from "@mui/icons-material/Done";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Link from "next/link";

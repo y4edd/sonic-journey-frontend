@@ -6,9 +6,9 @@ import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
 import { checkLoggedInServer, getUserId } from "@/utils/apiFunc";
+import { getPlayHistory } from "@/utils/apiFunc/history";
 import { getSong } from "@/utils/apiFunc/song";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
-import { getPlayHistory } from "@/utils/history";
 import styles from "./page.module.css";
 
 const PlayList = async () => {
@@ -35,12 +35,10 @@ const PlayList = async () => {
   const playHistory = await getPlayHistory(token, 10);
 
   // 取得したidを使って楽曲情報を取得
-  const playHistories = await Promise.all(
-    playHistory.songIds.map((id: number) => getSong(id.toString())),
-  );
+  const playHistories = await Promise.all(playHistory.map((id: number) => getSong(id.toString())));
 
   const historySongsInfo = playHistories.map((playHistorySong) => {
-    return playHistorySong.resSongData;
+    return playHistorySong;
   });
 
   return (
@@ -56,7 +54,7 @@ const PlayList = async () => {
 
       {historySongsInfo.length > 0 ? (
         <div>
-          <DeleteButton userId={userId} />
+          <DeleteButton userId={token} />
           <SongList songs={historySongsInfo} errorMessage="履歴がありません" url="music" />
         </div>
       ) : (

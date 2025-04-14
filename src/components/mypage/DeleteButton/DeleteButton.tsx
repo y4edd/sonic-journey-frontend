@@ -1,5 +1,5 @@
 "use client";
-import { deletePlayHistory } from "@/utils/history";
+import { deletePlayHistory } from "@/utils/apiFunc/history";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useRouter } from "next/navigation";
 import styles from "./DeleteButton.module.css";

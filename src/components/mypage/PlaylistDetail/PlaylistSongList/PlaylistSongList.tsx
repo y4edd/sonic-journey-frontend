@@ -2,7 +2,7 @@
 
 import SongsAudio from "@/components/music/SongsAudio/SongsAudio";
 import PlaylistSongButtons from "@/components/mypage/PlaylistDetail/PlaylistSongButtons/PlaylistSongButtons";
-import { savePlayHistory } from "@/utils/history";
+import { savePlayHistory } from "@/utils/apiFunc/history";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import styles from "./PlaylistSongList.module.css";

@@ -1,6 +1,6 @@
 "use client";
 
-import { savePlayHistory } from "@/utils/history";
+import { savePlayHistory } from "@/utils/apiFunc/history";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import StopCircleIcon from "@mui/icons-material/StopCircle";

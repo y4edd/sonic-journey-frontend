@@ -1,7 +1,7 @@
 import type { PlayHistorySong } from "@/types/deezer";
+import { getPlayHistory } from "@/utils/apiFunc/history";
 import { getSong } from "@/utils/apiFunc/song";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
-import { getPlayHistory } from "@/utils/history";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./PlayHistory.module.css";
@@ -22,9 +22,7 @@ const PlayHistory = async () => {
   // ログインユーザーの試聴履歴楽曲のidを取得
   const playHistory = await getPlayHistory(token, 6);
   // 取得したidを使って楽曲情報を取得
-  const playHistories = await Promise.all(
-    playHistory.songIds.map((id: number) => getSong(id.toString())),
-  );
+  const playHistories = await Promise.all(playHistory.map((id: number) => getSong(id.toString())));
 
   const playHistorySongs = playHistories.map((playHistorySong) => {
     return playHistorySong;
