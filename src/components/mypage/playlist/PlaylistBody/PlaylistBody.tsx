@@ -4,14 +4,16 @@ import PlaylistButton from "@/components/mypage/PlaylistButton/PlaylistButton";
 import PlaylistForm from "@/components/mypage/PlaylistForm/PlaylistForm";
 import PlaylistList from "@/components/mypage/PlaylistList/PlaylistList";
 import { PlaylistEdit } from "@/components/mypage/PlaylistsEdit/PlaylistEdit";
-import type { Playlist } from "@/types/deezer";
+import type { PlaylistProps } from "@/types/playlist";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import EditIcon from "@mui/icons-material/Edit";
 import { useEffect, useState } from "react";
 import styles from "./PlaylistBody.module.css";
-import { PlaylistProps } from "@/types/playlist";
 
-export const PlaylistBody = ({ userId, playlist }: { userId: string, playlist:PlaylistProps[] }) => {
+export const PlaylistBody = ({
+  userId,
+  playlist,
+}: { userId: string; playlist: PlaylistProps[] }) => {
   const [playlists, setPlaylists] = useState<PlaylistProps[]>([]);
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);

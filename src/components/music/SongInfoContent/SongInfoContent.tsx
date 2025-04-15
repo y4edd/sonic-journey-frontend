@@ -1,4 +1,5 @@
 import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
+import { getUserPlaylist } from "@/utils/apiFunc/playlist";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,7 +7,6 @@ import { AddPlaylist } from "../AddPlaylist/AddPlaylist";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import SongAudio from "../SongAudio/SongAudio";
 import styles from "./SongInfoContent.module.css";
-import { getUserPlaylist } from "@/utils/apiFunc/playlist";
 
 type SongInfoContentProps = {
   id: number;

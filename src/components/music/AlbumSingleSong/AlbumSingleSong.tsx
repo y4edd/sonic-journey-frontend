@@ -2,6 +2,7 @@
 
 import { useAlbumAudio } from "@/context/AlbumAudioContext";
 import type { favoriteSong } from "@/types/favorite";
+import type { PlaylistProps } from "@/types/playlist";
 import { deleteFavoriteSongs, postSong } from "@/utils/apiFunc/favorite";
 import { savePlayHistory } from "@/utils/apiFunc/history";
 import DoneIcon from "@mui/icons-material/Done";
@@ -11,7 +12,6 @@ import { useEffect, useState } from "react";
 import { AddPlaylist } from "../AddPlaylist/AddPlaylist";
 import AlbumSingleSongAudio from "../AlbumSingleSongAudio/AlbumSingleSongAudio";
 import styles from "./AlbumSingleSong.module.css";
-import { PlaylistProps } from "@/types/playlist";
 
 type AlbumSingleSongProps = {
   id: number;
@@ -22,7 +22,14 @@ type AlbumSingleSongProps = {
   playlists: PlaylistProps[];
 };
 
-const AlbumSingleSong = ({ id, num, title, preview, favSongIDs, playlists }: AlbumSingleSongProps) => {
+const AlbumSingleSong = ({
+  id,
+  num,
+  title,
+  preview,
+  favSongIDs,
+  playlists,
+}: AlbumSingleSongProps) => {
   const [isFav, setIsFav] = useState<boolean>(false);
   // コンテキストからstateを呼び出す
   const { currentlyPlayingId, setCurrentlyPlayingId } = useAlbumAudio();

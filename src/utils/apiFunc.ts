@@ -55,4 +55,3 @@ export const getAddPlaylists = async (user: string, id: number) => {
     console.error(error);
   }
 };
-

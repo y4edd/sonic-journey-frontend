@@ -3,9 +3,9 @@
 import { AlbumAudioProvider } from "@/context/AlbumAudioContext";
 import type { AlbumSingle } from "@/types/deezer";
 import type { favoriteSong } from "@/types/favorite";
+import type { PlaylistProps } from "@/types/playlist";
 import AlbumSingleSong from "../AlbumSingleSong/AlbumSingleSong";
 import styles from "./AlbumSingles.module.css";
-import { PlaylistProps } from "@/types/playlist";
 
 type AlbumSong = {
   id: number;

@@ -7,11 +7,11 @@ import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
 import { getAlbum } from "@/utils/apiFunc/album";
 import { getFavoriteSongs } from "@/utils/apiFunc/favorite";
+import { getUserPlaylist } from "@/utils/apiFunc/playlist";
 import { getArtistSongs } from "@/utils/apiFunc/song";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import styles from "./page.module.css";
-import { getUserPlaylist } from "@/utils/apiFunc/playlist";
 
 type AlbumPageProps = {
   params: Promise<{ id: string }>;
@@ -54,7 +54,11 @@ const AlbumPage = async ({ params }: AlbumPageProps) => {
         </div>
         <div className={styles.albumSongsContent}>
           <MusicContentTitle title="収録楽曲" />
-          <AlbumSingles singles={resultData.albumSongs} favSongIDs={favSongIDs} playlists={playlists} />
+          <AlbumSingles
+            singles={resultData.albumSongs}
+            favSongIDs={favSongIDs}
+            playlists={playlists}
+          />
         </div>
         <div className={styles.artistInfoLinkContent}>
           <MusicContentTitle title="アーティスト情報" />

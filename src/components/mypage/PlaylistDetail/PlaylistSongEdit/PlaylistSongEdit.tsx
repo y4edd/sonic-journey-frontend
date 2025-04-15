@@ -1,13 +1,13 @@
 "use client";
 
+import type { DiffPlaylists } from "@/types/playlist";
+import { deleteSongPlaylist } from "@/utils/apiFunc/playlist";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import styles from "./PlaylistSongEdit.module.css";
-import { deleteSongPlaylist } from "@/utils/apiFunc/playlist";
-import { DiffPlaylists } from "@/types/playlist";
 
 export const PlaylistSongEdit = ({
   playlistId,
@@ -20,9 +20,7 @@ export const PlaylistSongEdit = ({
 }) => {
   const router = useRouter();
   const [playlistSongs, setPlaylistSongs] = useState(playlistSongInfo);
-  const diffPlaylists: DiffPlaylists[] = [
-    { playlistId: playlistId, musicFlag: false },
-  ];
+  const diffPlaylists: DiffPlaylists[] = [{ playlistId: playlistId, musicFlag: false }];
 
   const handlePlaylistDelete = async (playlist: {
     api_song_id: number;

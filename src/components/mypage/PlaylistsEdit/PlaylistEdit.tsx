@@ -1,25 +1,27 @@
 "use client";
 
+import type { PlaylistProps } from "@/types/playlist";
 import { fetchUser } from "@/utils/apiFunc";
+import { deletePlaylist } from "@/utils/apiFunc/playlist";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import styles from "./PlaylistEdit.module.css";
 import { TitleChange } from "./TitleChange/TitleChange";
-import { PlaylistProps } from "@/types/playlist";
-import { deletePlaylist } from "@/utils/apiFunc/playlist";
 
 export const PlaylistEdit = ({
   setEditModalOpen,
   playlist,
 }: {
-  setEditModalOpen: Dispatch<SetStateAction<boolean>>,
+  setEditModalOpen: Dispatch<SetStateAction<boolean>>;
   playlist: PlaylistProps[];
 }) => {
-  const [user, setUser] = useState<string | null>(null);
+  const [_user, setUser] = useState<string | null>(null);
   const [playlists, setPlaylists] = useState<PlaylistProps[]>([]);
   const [titleChangeFlag, setTitleChangeFlag] = useState<boolean[]>([]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ハンバーガーメニューの開閉により更新
   useEffect(() => {
     const getUser = async () => {
       const data = await fetchUser();
@@ -30,6 +32,7 @@ export const PlaylistEdit = ({
   }, []);
 
   // プレイリスト名編集のための状態関数を作成
+  // biome-ignore lint/correctness/useExhaustiveDependencies: ハンバーガーメニューの開閉により更新
   useEffect(() => {
     setTitleChangeFlag([]);
     for (let i = 1; i <= playlists.length; i++) {
@@ -41,7 +44,7 @@ export const PlaylistEdit = ({
     const deleteCheck = confirm(`「${playlist.name}」\nプレイリストを削除しますか？`);
     if (deleteCheck) {
       try {
-        const res = (await deletePlaylist(playlist.id))as Response;
+        const res = (await deletePlaylist(playlist.id)) as Response;
 
         if (!res.ok) {
           throw new Error("正常に削除できませんでした");

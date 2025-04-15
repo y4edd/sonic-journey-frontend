@@ -1,5 +1,5 @@
-import { PlayListFormData } from "@/components/mypage/PlaylistForm/PlaylistForm";
-import { DiffPlaylists } from "@/types/playlist";
+import type { PlayListFormData } from "@/components/mypage/PlaylistForm/PlaylistForm";
+import type { DiffPlaylists } from "@/types/playlist";
 
 // プレイリストの新規作成
 export const postPlaylist = async (formData: PlayListFormData) => {
@@ -16,10 +16,10 @@ export const postPlaylist = async (formData: PlayListFormData) => {
       cache: "no-cache",
     });
     return res;
-  }catch(error) {
+  } catch (error) {
     console.error(error);
   }
-}
+};
 
 // ユーザー毎のプレイリストを取得する関数
 export const getUserPlaylist = async (user_id: string) => {
@@ -27,8 +27,8 @@ export const getUserPlaylist = async (user_id: string) => {
     const response = await fetch("http://localhost:3005/playlist", {
       cache: "no-cache",
       headers: {
-        "Authorization": `${user_id}`,
-      }
+        Authorization: `${user_id}`,
+      },
     });
     const res = await response.json();
     if (!response.ok) {
@@ -58,13 +58,13 @@ export const getUserPlaylistCSR = async () => {
   }
 };
 
-export const postSongPlayList = async(diffPlaylists: DiffPlaylists[], musicId: number) => {
+export const postSongPlayList = async (diffPlaylists: DiffPlaylists[], musicId: number) => {
   const response = await fetch(`http://localhost:3005/playlist/music/${musicId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     // 配列はNest側ではマッピングできない。
     // オブジェクトにする
-    body: JSON.stringify({playlists: diffPlaylists}),
+    body: JSON.stringify({ playlists: diffPlaylists }),
     cache: "no-cache",
     credentials: "include",
   });
@@ -74,15 +74,15 @@ export const postSongPlayList = async(diffPlaylists: DiffPlaylists[], musicId: n
     throw new Error("プレイリストに楽曲の追加ができませんでした");
   }
   return response;
-}
+};
 
-export const deleteSongPlaylist = async(diffPlaylists: DiffPlaylists[], musicId: number) => {
+export const deleteSongPlaylist = async (diffPlaylists: DiffPlaylists[], musicId: number) => {
   const response = await fetch(`http://localhost:3005/playlist/music/${musicId}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
     // 配列はNest側ではマッピングできない。
     // オブジェクトにする
-    body: JSON.stringify({playlists: diffPlaylists}),
+    body: JSON.stringify({ playlists: diffPlaylists }),
     cache: "no-cache",
     credentials: "include",
   });
@@ -92,23 +92,23 @@ export const deleteSongPlaylist = async(diffPlaylists: DiffPlaylists[], musicId:
     throw new Error("プレイリスト内の楽曲の削除ができませんでした");
   }
   return response;
-}
+};
 
 // プレイリストのIDからプレイリスト内のapi_song_idを取得する
-export const getSongPlaylist = async(id: number, token: string) => {
+export const getSongPlaylist = async (id: number, token: string) => {
   const res = await fetch(`http://localhost:3005/playlist/${id}`, {
     cache: "no-cache",
     headers: {
-      "Authorization": `${token}`,
+      Authorization: `${token}`,
     },
   });
   if (!res.ok) {
     throw new Error("プレイリストの情報が得られませんでした");
   }
   return res;
-}
+};
 
-export const deletePlaylist = async(id: number) => {
+export const deletePlaylist = async (id: number) => {
   try {
     const res = await fetch(`http://localhost:3005/playlist/${id}`, {
       method: "DELETE",
@@ -122,9 +122,9 @@ export const deletePlaylist = async(id: number) => {
   } catch (error) {
     console.error(error);
   }
-}
+};
 
-export const reNamePlaylist = async(id: number, title: string, userId: string) => {
+export const reNamePlaylist = async (id: number, title: string) => {
   const res = await fetch(`http://localhost:3005/playlist/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -135,4 +135,4 @@ export const reNamePlaylist = async(id: number, title: string, userId: string) =
     credentials: "include",
   });
   return res;
-}
+};

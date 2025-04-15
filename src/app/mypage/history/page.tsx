@@ -5,7 +5,7 @@ import DeleteButton from "@/components/mypage/DeleteButton/DeleteButton";
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { checkLoggedInServer,} from "@/utils/apiFunc";
+import { checkLoggedInServer } from "@/utils/apiFunc";
 import { getPlayHistory } from "@/utils/apiFunc/history";
 import { getSong } from "@/utils/apiFunc/song";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";

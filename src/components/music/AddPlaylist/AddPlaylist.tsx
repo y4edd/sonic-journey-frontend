@@ -1,15 +1,19 @@
 "use client";
 
 import Modal from "@/components/mypage/Modal/Modal";
+import type { PlaylistProps } from "@/types/playlist";
 import { fetchUser } from "@/utils/apiFunc";
 import { getAddPlaylists } from "@/utils/apiFunc";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import { useEffect, useState } from "react";
 import { SelectAddPlaylist } from "../SelectAddPlaylist/SelectAddPlaylist";
 import styles from "./AddPlaylist.module.css";
-import { PlaylistProps } from "@/types/playlist";
 
-export const AddPlaylist = ({ id, text, playlists }: { id: number; text: string; playlists: PlaylistProps[] }) => {
+export const AddPlaylist = ({
+  id,
+  text,
+  playlists,
+}: { id: number; text: string; playlists: PlaylistProps[] }) => {
   const [user, setUser] = useState<string | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [defaultPlaylists, setDefaultPlaylists] = useState<
@@ -21,6 +25,7 @@ export const AddPlaylist = ({ id, text, playlists }: { id: number; text: string;
     }
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: プレイリスト作成、編集モーダルの開閉により更新
   useEffect(() => {
     const getUser = async () => {
       const data = await fetchUser();
@@ -29,7 +34,7 @@ export const AddPlaylist = ({ id, text, playlists }: { id: number; text: string;
     getUser();
   }, []);
 
-  // // biome-ignore lint/correctness/useExhaustiveDependencies: プレイリスト作成、編集モーダルの開閉により更新
+  // biome-ignore lint/correctness/useExhaustiveDependencies: プレイリスト作成、編集モーダルの開閉により更新
   useEffect(() => {
     if (user) {
       const addMusicPlaylists = async () => {

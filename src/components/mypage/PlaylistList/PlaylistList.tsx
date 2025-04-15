@@ -1,7 +1,6 @@
-import type { Playlist } from "@/types/deezer";
+import type { PlaylistProps } from "@/types/playlist";
 import PlaylistItem from "../PlaylistItem/PlaylistItem";
 import styles from "./PlaylistList.module.css";
-import { PlaylistProps } from "@/types/playlist";
 
 const PlaylistList = ({ playlists }: { playlists: PlaylistProps[] }) => {
   return (

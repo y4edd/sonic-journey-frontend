@@ -1,5 +1,7 @@
 "use client";
 
+import type { DiffPlaylists, PlaylistProps } from "@/types/playlist";
+import { deleteSongPlaylist, postSongPlayList } from "@/utils/apiFunc/playlist";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import Link from "next/link";
 import { type ChangeEvent, useEffect } from "react";
@@ -7,8 +9,6 @@ import type { FormEvent } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import styles from "./SelectAddPlaylist.module.css";
-import { DiffPlaylists, PlaylistProps } from "@/types/playlist";
-import { deleteSongPlaylist, postSongPlayList } from "@/utils/apiFunc/playlist";
 
 export const SelectAddPlaylist = ({
   musicId,
@@ -26,9 +26,7 @@ export const SelectAddPlaylist = ({
     useState<{ playlistId: number; musicFlag: boolean }[]>(defaultPlaylists);
 
   // defaultと最新の差分のあるプレイリストを獲得
-  const [diffPlaylists, setDiffPlaylists] = useState<DiffPlaylists[]>(
-    [],
-  );
+  const [diffPlaylists, setDiffPlaylists] = useState<DiffPlaylists[]>([]);
 
   useEffect(() => {
     setAddPlaylists(defaultPlaylists);
@@ -93,18 +91,17 @@ export const SelectAddPlaylist = ({
       if (added.length > 0) {
         await postSongPlayList(added, musicId);
       }
-    
+
       if (removed.length > 0) {
         await deleteSongPlaylist(removed, musicId);
       }
-    
+
       alert("プレイリストが編集されました");
       setModalOpen(false);
     } catch (error) {
       console.error(error);
       alert("プレイリストの編集に失敗しました");
     }
-    
   };
 
   return (

@@ -1,13 +1,13 @@
 "use client";
 
 import { playlistTitleSchema } from "@/lib/validation";
+import { postPlaylist } from "@/utils/apiFunc/playlist";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { z } from "zod";
 import styles from "./PlaylistForm.module.css";
-import { postPlaylist } from "@/utils/apiFunc/playlist";
 
 export type PlayListFormData = z.infer<typeof playlistTitleSchema>;
 
@@ -31,12 +31,13 @@ const PlaylistForm = ({
   const onSubmit: SubmitHandler<PlayListFormData> = (data: PlayListFormData) => {
     setFormData(data);
   };
+  // biome-ignore lint/correctness/useExhaustiveDependencies: プレイリスト作成、編集モーダルの開閉により更新
   useEffect(() => {
     const createPlaylist = async () => {
       if (!formData) return;
 
       try {
-        const res  = (await postPlaylist(formData))as Response;
+        const res = (await postPlaylist(formData)) as Response;
 
         if (res.status === 409) {
           alert("同名のプレイリストが既に作成されています");

@@ -1,6 +1,8 @@
 "use client";
 
 import { playlistTitleSchema } from "@/lib/validation";
+import type { PlaylistProps } from "@/types/playlist";
+import { reNamePlaylist } from "@/utils/apiFunc/playlist";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -8,8 +10,6 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { z } from "zod";
 import styles from "./TitleChange.module.css";
-import { PlaylistProps } from "@/types/playlist";
-import { reNamePlaylist } from "@/utils/apiFunc/playlist";
 
 type PlaylistFormData = z.infer<typeof playlistTitleSchema>;
 
@@ -47,7 +47,7 @@ export const TitleChange = ({
       if (!formData) return;
 
       try {
-        const res = await reNamePlaylist(playlist.id, formData.playlistTitle, playlist.users_id);
+        const res = await reNamePlaylist(playlist.id, formData.playlistTitle);
 
         if (res.status === 409) {
           alert("同名のプレイリストが既に作成されています");

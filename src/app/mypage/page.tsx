@@ -55,7 +55,7 @@ const MyPage = async () => {
           mainTitle="ユーザー情報"
           subTitle="編集・確認"
           icon={<AccountBoxIcon fontSize="large" />}
-          link={`/user/info`}
+          link={"/user/info"}
         />
         <Logout />
       </div>
