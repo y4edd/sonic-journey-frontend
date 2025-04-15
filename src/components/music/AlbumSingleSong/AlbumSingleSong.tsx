@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { AddPlaylist } from "../AddPlaylist/AddPlaylist";
 import AlbumSingleSongAudio from "../AlbumSingleSongAudio/AlbumSingleSongAudio";
 import styles from "./AlbumSingleSong.module.css";
+import { PlaylistProps } from "@/types/playlist";
 
 type AlbumSingleSongProps = {
   id: number;
@@ -18,9 +19,10 @@ type AlbumSingleSongProps = {
   title: string;
   preview: string;
   favSongIDs: favoriteSong[];
+  playlists: PlaylistProps[];
 };
 
-const AlbumSingleSong = ({ id, num, title, preview, favSongIDs }: AlbumSingleSongProps) => {
+const AlbumSingleSong = ({ id, num, title, preview, favSongIDs, playlists }: AlbumSingleSongProps) => {
   const [isFav, setIsFav] = useState<boolean>(false);
   // コンテキストからstateを呼び出す
   const { currentlyPlayingId, setCurrentlyPlayingId } = useAlbumAudio();
@@ -99,7 +101,7 @@ const AlbumSingleSong = ({ id, num, title, preview, favSongIDs }: AlbumSingleSon
         </p>
 
         <div className={styles.play}>
-          <AddPlaylist id={id} text="" />
+          <AddPlaylist id={id} text="" playlists={playlists} />
         </div>
 
         {isFav ? (

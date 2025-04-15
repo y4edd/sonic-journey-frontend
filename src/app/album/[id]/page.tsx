@@ -11,6 +11,7 @@ import { getArtistSongs } from "@/utils/apiFunc/song";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import type { ReadonlyURLSearchParams } from "next/navigation";
 import styles from "./page.module.css";
+import { getUserPlaylist } from "@/utils/apiFunc/playlist";
 
 type AlbumPageProps = {
   params: Promise<{ id: string }>;
@@ -30,6 +31,9 @@ const AlbumPage = async ({ params }: AlbumPageProps) => {
   const token = await getTokenFromCookie();
 
   const favSongIDs = await getFavoriteSongs(token);
+
+  const playlists = await getUserPlaylist(token);
+
   return (
     <>
       <BreadList
@@ -50,7 +54,7 @@ const AlbumPage = async ({ params }: AlbumPageProps) => {
         </div>
         <div className={styles.albumSongsContent}>
           <MusicContentTitle title="収録楽曲" />
-          <AlbumSingles singles={resultData.albumSongs} favSongIDs={favSongIDs} />
+          <AlbumSingles singles={resultData.albumSongs} favSongIDs={favSongIDs} playlists={playlists} />
         </div>
         <div className={styles.artistInfoLinkContent}>
           <MusicContentTitle title="アーティスト情報" />

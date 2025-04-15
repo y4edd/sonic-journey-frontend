@@ -130,8 +130,8 @@ export const HamburgerMenu = () => {
                     </li>
                     <li
                       className={styles.hamburgerinList}
-                      onClick={() => hamburgerLink(`/user/${user}/info`)}
-                      onKeyDown={() => hamburgerLink(`/user/${user}/info`)}
+                      onClick={() => hamburgerLink(`/user/info`)}
+                      onKeyDown={() => hamburgerLink(`/user/info`)}
                     >
                       <AccountBoxIcon fontSize="large" />
                       &nbsp;アカウント情報

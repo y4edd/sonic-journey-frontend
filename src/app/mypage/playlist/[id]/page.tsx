@@ -2,9 +2,10 @@ import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAcce
 import { PlaylistHeader } from "@/components/mypage/PlaylistDetail/PlaylistHeader/PlaylistHeader";
 import { PlaylistSongList } from "@/components/mypage/PlaylistDetail/PlaylistSongList/PlaylistSongList";
 import BreadList from "@/components/top/BreadList/BreadList";
-import type { DeezerTrackSong } from "@/types/deezer";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import styles from "./page.module.css";
+import { getSongPlaylist } from "@/utils/apiFunc/playlist";
+import { getSong } from "@/utils/apiFunc/song";
 
 type PlaylistSongsAudio = {
   preview?: string;
@@ -14,54 +15,36 @@ type PlaylistSongsAudio = {
   album_id: number;
 };
 
-type PlaylistInfo = {
-  playlistTitle: string;
-  playlistSongs: { api_song_id: number }[];
-};
-
 const Page = async ({ params }: { params: Promise<{ id: number }> }) => {
   const { id } = await params;
   const token = await getTokenFromCookie();
   try {
-    const res = await fetch(`http://localhost:3000/api/playlistSong?id=${id}`, {
-      cache: "no-cache",
-      headers: {
-        Cookie: token,
-      },
-    });
-
-    if (res.status === 401) {
-      return <UnauthorizedAccess />;
-    }
+    const res = await getSongPlaylist(id, token);
     if (!res.ok) {
       throw new Error("プレイリストの情報が得られませんでした");
     }
 
-    const playlistInfo: PlaylistInfo = await res.json();
+    const playlistInfo = await res.json();
 
-    const response = await fetch("http://localhost:3000/api/getSpecialSongInfo", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        songs: playlistInfo?.playlistSongs || [],
-      }),
-      cache: "no-store",
-    });
-
-    const playlistSongs: DeezerTrackSong[] = await response.json();
+    // number型のapi_song_idを元に外部APIを叩き、検索結果を取得
+    const songs = await Promise.all(
+      playlistInfo.map(async(song: number) => {
+        const songStr = song.toString();
+        const response = await getSong(songStr);
+        return response;
+      })
+    );
 
     const playlistSongIds: { api_song_id: number; title: string }[] =
-      playlistSongs.length > 0
-        ? playlistSongs.map((playlistSong) => {
+      songs.length > 0
+        ? songs.map((playlistSong) => {
             return { api_song_id: playlistSong.id, title: playlistSong.title };
           })
         : [];
 
     const playlistSongsAudio: PlaylistSongsAudio[] =
-      playlistSongs.length > 0
-        ? playlistSongs.map((playlistSong) => {
+      songs.length > 0
+        ? songs.map((playlistSong) => {
             return {
               preview: playlistSong.preview,
               id: playlistSong.id,

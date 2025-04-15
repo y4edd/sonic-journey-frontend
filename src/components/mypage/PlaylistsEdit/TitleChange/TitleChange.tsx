@@ -1,7 +1,6 @@
 "use client";
 
 import { playlistTitleSchema } from "@/lib/validation";
-import type { Playlist } from "@/types/deezer";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -9,6 +8,8 @@ import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { z } from "zod";
 import styles from "./TitleChange.module.css";
+import { PlaylistProps } from "@/types/playlist";
+import { reNamePlaylist } from "@/utils/apiFunc/playlist";
 
 type PlaylistFormData = z.infer<typeof playlistTitleSchema>;
 
@@ -17,7 +18,7 @@ export const TitleChange = ({
   setTitleChangeFlag,
   playlistIndex,
 }: {
-  playlist: Playlist;
+  playlist: PlaylistProps;
   setTitleChangeFlag: Dispatch<SetStateAction<boolean[]>>;
   playlistIndex: number;
 }) => {
@@ -46,16 +47,7 @@ export const TitleChange = ({
       if (!formData) return;
 
       try {
-        const res = await fetch("http://localhost:3000/api/updatePlaylist", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: playlist.id,
-            name: formData.playlistTitle,
-            user_id: playlist.user_id,
-          }),
-          cache: "no-cache",
-        });
+        const res = await reNamePlaylist(playlist.id, formData.playlistTitle, playlist.users_id);
 
         if (res.status === 409) {
           alert("同名のプレイリストが既に作成されています");

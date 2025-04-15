@@ -1,18 +1,3 @@
-// ユーザー毎のプレイリストを取得する関数
-export const getUserPlaylist = async (user_id: string) => {
-  try {
-    const res = await fetch(`http://localhost:3000/api/user/playlistCheck?user_id=${user_id}`, {
-      cache: "no-cache",
-    });
-    if (!res.ok) {
-      throw new Error("データが見つかりませんでした");
-    }
-    return await res.json();
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 // ログイン状態を確認し、idを返す
 export const fetchUser = async () => {
   try {
@@ -71,23 +56,3 @@ export const getAddPlaylists = async (user: string, id: number) => {
   }
 };
 
-// トークンからuserIDを取得する関数（Cookieのtokenを引数にとる）
-export const getUserId = async (token: string) => {
-  try {
-    const response = await fetch("http://localhost:3000/api/user/checkLogin", {
-      cache: "no-cache",
-      headers: {
-        Cookie: token,
-      },
-    });
-    const data = await response.json();
-
-    if (!response.ok) {
-      return data.message;
-    }
-    return data.id;
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
-};

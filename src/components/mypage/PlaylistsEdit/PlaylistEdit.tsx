@@ -1,21 +1,24 @@
 "use client";
 
-import { fetchUser, getUserPlaylist } from "@/utils/apiFunc";
+import { fetchUser } from "@/utils/apiFunc";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import type { Playlist } from "@prisma/client";
 import { useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import styles from "./PlaylistEdit.module.css";
 import { TitleChange } from "./TitleChange/TitleChange";
+import { PlaylistProps } from "@/types/playlist";
+import { deletePlaylist } from "@/utils/apiFunc/playlist";
 
 export const PlaylistEdit = ({
   setEditModalOpen,
+  playlist,
 }: {
-  setEditModalOpen: Dispatch<SetStateAction<boolean>>;
+  setEditModalOpen: Dispatch<SetStateAction<boolean>>,
+  playlist: PlaylistProps[];
 }) => {
   const [user, setUser] = useState<string | null>(null);
-  const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const [playlists, setPlaylists] = useState<PlaylistProps[]>([]);
   const [titleChangeFlag, setTitleChangeFlag] = useState<boolean[]>([]);
   useEffect(() => {
     const getUser = async () => {
@@ -23,17 +26,8 @@ export const PlaylistEdit = ({
       setUser(data.id);
     };
     getUser();
+    setPlaylists(playlist);
   }, []);
-
-  useEffect(() => {
-    if (user) {
-      const getPlaylists = async () => {
-        const getPlaylists = await getUserPlaylist(user);
-        setPlaylists(getPlaylists);
-      };
-      getPlaylists();
-    }
-  }, [user]);
 
   // プレイリスト名編集のための状態関数を作成
   useEffect(() => {
@@ -43,19 +37,11 @@ export const PlaylistEdit = ({
     }
   }, [playlists]);
 
-  const handlePlaylistDelete = async (playlist: Playlist) => {
+  const handlePlaylistDelete = async (playlist: PlaylistProps) => {
     const deleteCheck = confirm(`「${playlist.name}」\nプレイリストを削除しますか？`);
     if (deleteCheck) {
       try {
-        const res = await fetch("http://localhost:3000/api/deletePlaylist", {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: playlist.id,
-          }),
-        });
+        const res = (await deletePlaylist(playlist.id))as Response;
 
         if (!res.ok) {
           throw new Error("正常に削除できませんでした");

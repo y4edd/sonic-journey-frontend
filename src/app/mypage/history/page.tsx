@@ -5,7 +5,7 @@ import DeleteButton from "@/components/mypage/DeleteButton/DeleteButton";
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import SongList from "@/components/mypage/SongList/SongList";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { checkLoggedInServer, getUserId } from "@/utils/apiFunc";
+import { checkLoggedInServer,} from "@/utils/apiFunc";
 import { getPlayHistory } from "@/utils/apiFunc/history";
 import { getSong } from "@/utils/apiFunc/song";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
@@ -19,16 +19,6 @@ const PlayList = async () => {
 
   if (!isLoggedin) {
     return <UnauthorizedAccess />;
-  }
-
-  const userId = await getUserId(token);
-
-  if (!userId) {
-    return (
-      <div className={styles.playHistoryGroup}>
-        <p>ユーザーIDが見つかりません。</p>
-      </div>
-    );
   }
 
   // ログインユーザーの試聴履歴楽曲のidを取得

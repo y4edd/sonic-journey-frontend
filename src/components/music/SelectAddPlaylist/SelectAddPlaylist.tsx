@@ -1,13 +1,14 @@
 "use client";
 
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import type { Playlist } from "@prisma/client";
 import Link from "next/link";
 import { type ChangeEvent, useEffect } from "react";
 import type { FormEvent } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import { useState } from "react";
 import styles from "./SelectAddPlaylist.module.css";
+import { DiffPlaylists, PlaylistProps } from "@/types/playlist";
+import { deleteSongPlaylist, postSongPlayList } from "@/utils/apiFunc/playlist";
 
 export const SelectAddPlaylist = ({
   musicId,
@@ -16,7 +17,7 @@ export const SelectAddPlaylist = ({
   setModalOpen,
 }: {
   musicId: number;
-  playlists: Playlist[];
+  playlists: PlaylistProps[];
   defaultPlaylists: { playlistId: number; musicFlag: boolean }[];
   setModalOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
@@ -25,7 +26,7 @@ export const SelectAddPlaylist = ({
     useState<{ playlistId: number; musicFlag: boolean }[]>(defaultPlaylists);
 
   // defaultと最新の差分のあるプレイリストを獲得
-  const [diffPlaylists, setDiffPlaylists] = useState<{ playlistId: number; musicFlag: boolean }[]>(
+  const [diffPlaylists, setDiffPlaylists] = useState<DiffPlaylists[]>(
     [],
   );
 
@@ -54,6 +55,7 @@ export const SelectAddPlaylist = ({
       ),
     );
   };
+  console.log(defaultPlaylists);
 
   const isChecked = (playlistId: number) => {
     const checkedPlaylist = defaultPlaylists.filter(
@@ -79,44 +81,30 @@ export const SelectAddPlaylist = ({
   }, [defaultPlaylists, addPlaylists]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    // 追加対象
+    const added = diffPlaylists.filter((p) => p.musicFlag);
+    // 削除対象
+    const removed = diffPlaylists.filter((p) => !p.musicFlag);
     if (diffPlaylists.length > 0) {
       e.preventDefault();
-
-      try {
-        const addRes = await fetch("http://localhost:3000/api/musicAddPlaylist", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ diffPlaylists, musicId }),
-          cache: "no-cache",
-        });
-
-        if (!addRes.ok) {
-          alert("プレイリストに楽曲の追加ができませんでした");
-          throw new Error("プレイリストに楽曲の追加ができませんでした");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-
-      try {
-        const delRes = await fetch("http://localhost:3000/api/musicDeletePlaylist", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ diffPlaylists, musicId }),
-          cache: "no-cache",
-        });
-        setModalOpen(false);
-        alert("プレイリストが編集されました");
-        if (!delRes.ok) {
-          alert("プレイリストの楽曲の削除ができませんでした");
-          throw new Error("プレイリストの楽曲の削除ができませんでした");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    } else {
-      setModalOpen(false);
     }
+
+    try {
+      if (added.length > 0) {
+        await postSongPlayList(added, musicId);
+      }
+    
+      if (removed.length > 0) {
+        await deleteSongPlaylist(removed, musicId);
+      }
+    
+      alert("プレイリストが編集されました");
+      setModalOpen(false);
+    } catch (error) {
+      console.error(error);
+      alert("プレイリストの編集に失敗しました");
+    }
+    
   };
 
   return (
@@ -134,7 +122,7 @@ export const SelectAddPlaylist = ({
         <>
           <p className={styles.modalTitle}>楽曲の追加先</p>
           <form onSubmit={handleSubmit} className={styles.form}>
-            {playlists.map((playlist: Playlist) => (
+            {playlists.map((playlist: PlaylistProps) => (
               <div className={styles.playlist} key={playlist.id}>
                 <input
                   type="checkbox"

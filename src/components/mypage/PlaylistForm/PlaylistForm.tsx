@@ -7,8 +7,9 @@ import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type { z } from "zod";
 import styles from "./PlaylistForm.module.css";
+import { postPlaylist } from "@/utils/apiFunc/playlist";
 
-type PlayListFormData = z.infer<typeof playlistTitleSchema>;
+export type PlayListFormData = z.infer<typeof playlistTitleSchema>;
 
 const PlaylistForm = ({
   user_id,
@@ -35,17 +36,7 @@ const PlaylistForm = ({
       if (!formData) return;
 
       try {
-        const res = await fetch("http://localhost:3000/api/createPlaylist", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: formData.playlistTitle,
-            user_id: user_id,
-          }),
-          cache: "no-cache",
-        });
+        const res  = (await postPlaylist(formData))as Response;
 
         if (res.status === 409) {
           alert("同名のプレイリストが既に作成されています");

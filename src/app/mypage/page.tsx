@@ -1,9 +1,6 @@
-import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAccess";
 import Logout from "@/components/mypage/Logout/Logout";
 import MenuBox from "@/components/mypage/MenuBox/MenuBox";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { getUserId } from "@/utils/apiFunc";
-import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import HistoryIcon from "@mui/icons-material/History";
 import MusicNoteTwoToneIcon from "@mui/icons-material/MusicNoteTwoTone";
@@ -12,11 +9,8 @@ import PlaylistPlayTwoToneIcon from "@mui/icons-material/PlaylistPlayTwoTone";
 import styles from "./page.module.css";
 
 const MyPage = async () => {
-  // NOTE: cookieからtokenを取得し、ログインしているか確認
-  const token = await getTokenFromCookie();
-
-  const userId = await getUserId(token);
-
+  // // NOTE: cookieからtokenを取得し、ログインしているか確認
+  // const token = await getTokenFromCookie();
   return (
     <div>
       <BreadList
@@ -61,7 +55,7 @@ const MyPage = async () => {
           mainTitle="ユーザー情報"
           subTitle="編集・確認"
           icon={<AccountBoxIcon fontSize="large" />}
-          link={`/user/${userId}/info`}
+          link={`/user/info`}
         />
         <Logout />
       </div>

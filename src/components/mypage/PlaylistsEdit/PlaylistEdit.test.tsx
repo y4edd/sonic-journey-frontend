@@ -1,10 +1,14 @@
 import type { Playlist } from "@/types/deezer";
-import { fetchUser, getUserPlaylist } from "@/utils/apiFunc";
+import { fetchUser } from "@/utils/apiFunc";
+import { getUserPlaylist } from "@/utils/apiFunc/playlist";
 import { render, screen, waitFor } from "@testing-library/react";
 import { PlaylistEdit } from "./PlaylistEdit";
 
 jest.mock("@/utils/apiFunc", () => ({
   fetchUser: jest.fn(),
+}));
+
+jest.mock("@/utils/apiFunc/playlist", () => ({
   getUserPlaylist: jest.fn(),
 }));
 

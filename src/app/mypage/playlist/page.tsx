@@ -2,14 +2,14 @@ import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAcce
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import { PlaylistBody } from "@/components/mypage/playlist/PlaylistBody/PlaylistBody";
 import BreadList from "@/components/top/BreadList/BreadList";
-import { getUserId } from "@/utils/apiFunc";
 import { checkLoggedInServer } from "@/utils/apiFunc";
+import { getUserPlaylist } from "@/utils/apiFunc/playlist";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 
 const PlayListPage = async () => {
   const token = await getTokenFromCookie();
   const isLoggedin = await checkLoggedInServer(token);
-  const userId = await getUserId(token);
+  const playlist = await getUserPlaylist(token);
 
   if (!isLoggedin) {
     return <UnauthorizedAccess />;
@@ -25,7 +25,7 @@ const PlayListPage = async () => {
         ]}
       />
       <MenuHeader title="プレイリスト" />
-      <PlaylistBody userId={userId} />
+      <PlaylistBody userId={token} playlist={playlist} />
     </>
   );
 };

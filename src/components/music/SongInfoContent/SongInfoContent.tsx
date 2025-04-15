@@ -6,6 +6,7 @@ import { AddPlaylist } from "../AddPlaylist/AddPlaylist";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import SongAudio from "../SongAudio/SongAudio";
 import styles from "./SongInfoContent.module.css";
+import { getUserPlaylist } from "@/utils/apiFunc/playlist";
 
 type SongInfoContentProps = {
   id: number;
@@ -27,7 +28,7 @@ const SongInfoContent = async ({
   // NOTE: DBからお気に入り楽曲を取得。
   const token = await getTokenFromCookie();
   const favoriteSongIDs = await getFavoriteSongs(token);
-
+  const playlists = await getUserPlaylist(token);
   return (
     <div>
       <div className={styles.songInfoContent}>
@@ -41,7 +42,7 @@ const SongInfoContent = async ({
             <SongAudio preview={preview} id={id} />
           </div>
           <FavoriteButton id={id} favoriteSongIDs={favoriteSongIDs} />
-          <AddPlaylist id={id} text="プレイリストに追加" />
+          <AddPlaylist id={id} text="プレイリストに追加" playlists={playlists} />
         </div>
       </div>
     </div>
