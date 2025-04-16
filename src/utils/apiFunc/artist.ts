@@ -36,7 +36,7 @@ export const getFreeArtist = async (artist: string, limit: string) => {
 // genreにはgenreのid
 export const getGenreArtist = async (genre: number) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/genreArtistSearch?genre=${genre}`, {
+    const res = await fetch(`http://localhost:3005/artist?genre=${genre}`, {
       cache: "no-cache",
     });
 

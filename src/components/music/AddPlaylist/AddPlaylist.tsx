@@ -1,7 +1,7 @@
 "use client";
 
 import Modal from "@/components/mypage/Modal/Modal";
-import type { PlaylistItemObj, PlaylistProps } from "@/types/playlist";
+import type { PlaylistProps } from "@/types/playlist";
 import { getUserPlaylistCSR } from "@/utils/apiFunc/playlist";
 import { fetchUserInfo } from "@/utils/apiFunc/user";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
@@ -41,14 +41,15 @@ export const AddPlaylist = ({
     const fetchData = async () => {
       // プレイリストIDからそのプレイリスト内の楽曲を取得し、
       // {playlistId, musicFlag: boolean}のオブジェクトを返す
-      const results: (PlaylistItemObj | null)[] = await Promise.all(
+      const results = await Promise.all(
         playlists.map(async (playlist) => {
           const playlistId = playlist.id;
           const songs = await getUserPlaylistCSR(playlistId);
           if (songs.includes(id)) {
             return { playlistId, musicFlag: true };
+          } else {
+            return { playlistId, musicFlag: false };
           }
-          return null;
         }),
       );
       // results 配列の中から null じゃないもの（＝有効なプレイリスト情報）だけを
@@ -56,7 +57,7 @@ export const AddPlaylist = ({
       // その際、取り出した要素が { playlistId: number; musicFlag: true }
       // であることを TypeScript に明示している。
       // （型ガード）
-      const validPlaylists: { playlistId: number; musicFlag: true }[] = [];
+      const validPlaylists = [];
 
       for (const item of results) {
         if (item !== null) {

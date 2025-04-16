@@ -1,3 +1,4 @@
+import { getSearchSongs } from "@/utils/apiFunc/song";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -36,24 +37,10 @@ export const useFreeWordSearch: UseFreeWordSearch = () => {
 
     // apiにリクエスト
     try {
-      const response = await fetch("/api/freeSearch", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ freeWord }),
-      });
-
-      // 失敗した場合の処理
-      if (!response.ok) {
-        setError("エラーが発生しました");
-        return;
-      }
-
-      const data = await response.json();
+      const response = await getSearchSongs(freeWord);
 
       //useRouterで検索結果ページに移動(クエリパラメータに検索ワードと検索数)
-      router.push(`/search?q=${freeWord}&n=${data.totalResults}&k=all&s=grid`);
+      router.push(`/search?q=${freeWord}&n=${response.length}&k=all&s=grid`);
     } catch (error) {
       console.error(error);
       setError("サーバーエラーが発生しました");
