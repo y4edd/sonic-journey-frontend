@@ -15,7 +15,6 @@ import { toast } from "react-toastify";
 import styles from "./page.module.css";
 import "react-toastify/dist/ReactToastify.css";
 import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAccess";
-import { fetchUser } from "@/utils/apiFunc";
 import { fetchUserInfo, patchUser } from "@/utils/apiFunc/user";
 
 const Edit = () => {
@@ -43,7 +42,7 @@ const Edit = () => {
   // ユーザーIDを取得
   const loadUser = async () => {
     try {
-      const data = await fetchUser();
+      const data = await fetchUserInfo();
       if (data?.id) {
         setUserId(data.id);
       } else {

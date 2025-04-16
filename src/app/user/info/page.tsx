@@ -9,7 +9,6 @@ import DeleteConfirm from "@/components/user/DeleteConfirm/DeleteConfirm";
 import Information from "@/components/user/Information/Information";
 import UserDetail from "@/components/user/UserDetail/UserDetail";
 import type { UserData } from "@/types/user";
-import { fetchUser } from "@/utils/apiFunc";
 import { deleteUser, fetchUserInfo } from "@/utils/apiFunc/user";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -28,7 +27,7 @@ const Info = () => {
 
   const loadUser = async () => {
     try {
-      const data = await fetchUser();
+      const data = await fetchUserInfo();
       if (data.id) {
         setUserId(data.id);
       } else {

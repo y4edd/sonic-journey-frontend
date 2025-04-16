@@ -2,7 +2,6 @@
 
 import { UseHamburgerOpen } from "@/hooks/header/useHamburgerOpen";
 import { useLogout } from "@/hooks/useLogout";
-import { fetchUser } from "@/utils/apiFunc";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
 import HistoryIcon from "@mui/icons-material/History";
@@ -18,6 +17,7 @@ import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "./HamburgerMenu.module.css";
+import { fetchUserInfo } from "@/utils/apiFunc/user";
 
 export const HamburgerMenu = () => {
   const [user, setUser] = useState<string | null>(null);
@@ -27,7 +27,7 @@ export const HamburgerMenu = () => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: ハンバーガーメニューの開閉により更新
   useEffect(() => {
     const getUser = async () => {
-      const data = await fetchUser();
+      const data = await fetchUserInfo();
       if (data) {
         setUser(data.id);
       }

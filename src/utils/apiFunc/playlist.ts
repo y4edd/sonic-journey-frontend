@@ -41,9 +41,10 @@ export const getUserPlaylist = async (user_id: string) => {
   }
 };
 
-export const getUserPlaylistCSR = async () => {
+// プレイリスト内の楽曲をクライアントサイドから取得する
+export const getUserPlaylistCSR = async (id: number) => {
   try {
-    const response = await fetch("http://localhost:3005/playlist/csr", {
+    const response = await fetch(`http://localhost:3005/playlist/csr/${id}`, {
       cache: "no-cache",
       credentials: "include",
     });

@@ -53,7 +53,6 @@ export const SelectAddPlaylist = ({
       ),
     );
   };
-  console.log(defaultPlaylists);
 
   const isChecked = (playlistId: number) => {
     const checkedPlaylist = defaultPlaylists.filter(

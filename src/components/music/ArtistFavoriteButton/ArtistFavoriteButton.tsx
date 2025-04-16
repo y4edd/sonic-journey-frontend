@@ -23,13 +23,15 @@ const ArtistFavoriteButton = ({
   };
   // biome-ignore lint/correctness/useExhaustiveDependencies: マウント時のみ実行
   useEffect(() => {
-    doneFav();
+    // ログインしている時のみ
+    if(favoriteArtists) {
+      doneFav();
+    }
   }, []);
 
   const postFavorite = async (id: number) => {
     try {
       await postFavoriteArtist(id);
-      alert("お気に入りアーティストに追加されました");
       setIsFav(true);
     } catch (error) {
       console.error(error);

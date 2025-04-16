@@ -1,7 +1,6 @@
 "use client";
 
 import type { PlaylistProps } from "@/types/playlist";
-import { fetchUser } from "@/utils/apiFunc";
 import { deletePlaylist } from "@/utils/apiFunc/playlist";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -9,6 +8,7 @@ import { useEffect, useState } from "react";
 import type { Dispatch, SetStateAction } from "react";
 import styles from "./PlaylistEdit.module.css";
 import { TitleChange } from "./TitleChange/TitleChange";
+import { fetchUserInfo } from "@/utils/apiFunc/user";
 
 export const PlaylistEdit = ({
   setEditModalOpen,
@@ -24,7 +24,7 @@ export const PlaylistEdit = ({
   // biome-ignore lint/correctness/useExhaustiveDependencies: ハンバーガーメニューの開閉により更新
   useEffect(() => {
     const getUser = async () => {
-      const data = await fetchUser();
+      const data = await fetchUserInfo();
       setUser(data.id);
     };
     getUser();

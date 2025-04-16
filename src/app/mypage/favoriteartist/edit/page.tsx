@@ -1,10 +1,8 @@
-import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAccess";
 import FavoriteArtistsEditContainer from "@/components/mypage/FavoriteArtistsEditContainer/FavoriteArtistsEditContainer";
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import BreadList from "@/components/top/BreadList/BreadList";
 import type { DeezerArtist } from "@/types/deezer";
 import type { favoriteArtist } from "@/types/favorite";
-import { checkLoggedInServer } from "@/utils/apiFunc";
 import { getArtist } from "@/utils/apiFunc/artist";
 import { getFavoriteArtistsForFav } from "@/utils/apiFunc/favorite";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
@@ -13,11 +11,6 @@ import styles from "./page.module.css";
 const EditFavoriteArtists = async () => {
   // ログイン確認をする
   const token = await getTokenFromCookie();
-  const isLoggedin = await checkLoggedInServer(token);
-
-  if (!isLoggedin) {
-    return <UnauthorizedAccess />;
-  }
 
   // DBからお気に入りアーティストを取得する
   const favoriteArtists = await getFavoriteArtistsForFav(token);

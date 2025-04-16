@@ -62,6 +62,10 @@ export const getFavoriteArtistsForFav = async (token: string) => {
     const res = await response.json();
 
     if (!response.ok) {
+      // 非ログの状態の時は早期リターン
+      if(res.statusCode === 403) {
+        return;
+      }
       throw new Error("データが見つかりませんでした");
     }
 
@@ -100,13 +104,14 @@ export const postFavoriteArtist = async (id: number) => {
       method: "POST",
       credentials: "include",
     });
-
     if (!response.ok) {
       const error = await response.json();
-      console.error(error);
-      alert(error.message);
-      return;
+      if(error.statusCode === 403) {
+        alert("ログインユーザー限定の機能です");
+      }
+      return response;
     }
+    alert("お気に入りアーティストに追加されました");
   } catch (error) {
     console.error(error);
   }

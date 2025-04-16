@@ -8,3 +8,8 @@ export type DiffPlaylists = {
   playlistId: number;
   musicFlag: boolean;
 };
+
+export type PlaylistItemObj = {
+  playlistId: number;
+  musicFlag: true;
+};

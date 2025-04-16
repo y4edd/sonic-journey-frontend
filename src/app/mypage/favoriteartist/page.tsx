@@ -1,11 +1,9 @@
 export const dynamic = "force-dynamic"; // 動的レンダリングを強制する
 
-import UnauthorizedAccess from "@/components/UnauthorizedAccess/UnauthorizedAccess";
 import FavoriteArtistsContainer from "@/components/mypage/FavoriteArtistsContainer/FavoriteArtistsContainer";
 import MenuHeader from "@/components/mypage/MenuHeader/MenuHeader";
 import BreadList from "@/components/top/BreadList/BreadList";
 import type { favoriteArtist } from "@/types/favorite";
-import { checkLoggedInServer } from "@/utils/apiFunc";
 import { getArtist } from "@/utils/apiFunc/artist";
 import { getFavoriteArtistsForFav } from "@/utils/apiFunc/favorite";
 import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
@@ -13,11 +11,6 @@ import { getTokenFromCookie } from "@/utils/getTokenFromCookie";
 const FavoriteArtist = async () => {
   // NOTE: cookieからtokenを取得し、ログインしているか確認
   const token = await getTokenFromCookie();
-  const isLoggedin = await checkLoggedInServer(token);
-
-  if (!isLoggedin) {
-    return <UnauthorizedAccess />;
-  }
 
   // NOTE: DBからお気に入りアーティストを取得
   const favoriteArtists = await getFavoriteArtistsForFav(token);
