@@ -32,6 +32,10 @@ export const getUserPlaylist = async (user_id: string) => {
     });
     const res = await response.json();
     if (!response.ok) {
+      // 非ログの状態でエラーを返す必要はない
+      if (res.statusCode === 403) {
+        return;
+      }
       throw new Error("データが見つかりませんでした");
     }
 

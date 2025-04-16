@@ -28,6 +28,9 @@ export const fetchUserInfo = async () => {
     });
     const res = await response.json();
     if (!response.ok) {
+      if (res.statusCode === 403) {
+        return;
+      }
       console.error(res.message);
     }
     return res;

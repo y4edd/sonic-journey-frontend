@@ -53,6 +53,9 @@ const AlbumSingleSong = ({
 
   // NOTE: DBから取得したお気に入り楽曲とidを比較し、お気に入りボタンの表示を変える
   const doneFav = async () => {
+    if (!favSongIDs) {
+      return;
+    }
     const songIds = favSongIDs.map((song) => Number(song.api_song_id));
 
     if (songIds.includes(id)) {

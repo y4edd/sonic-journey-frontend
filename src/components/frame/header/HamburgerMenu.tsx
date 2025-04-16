@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 import styles from "./HamburgerMenu.module.css";
 
 export const HamburgerMenu = () => {
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<string>("");
   const { openMenu, openMenuClick, hamburgerLink } = UseHamburgerOpen();
   const { logoutUser } = useLogout();
 

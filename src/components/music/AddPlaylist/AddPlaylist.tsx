@@ -52,20 +52,7 @@ export const AddPlaylist = ({
           }
         }),
       );
-      // results 配列の中から null じゃないもの（＝有効なプレイリスト情報）だけを
-      // 取り出してvalidPlaylists に入れる。
-      // その際、取り出した要素が { playlistId: number; musicFlag: true }
-      // であることを TypeScript に明示している。
-      // （型ガード）
-      const validPlaylists = [];
-
-      for (const item of results) {
-        if (item !== null) {
-          validPlaylists.push(item);
-        }
-      }
-
-      setDefaultPlaylists(validPlaylists);
+      setDefaultPlaylists(results);
     };
 
     fetchData();
