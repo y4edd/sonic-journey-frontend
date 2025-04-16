@@ -2,12 +2,12 @@
 
 import Modal from "@/components/mypage/Modal/Modal";
 import type { PlaylistItemObj, PlaylistProps } from "@/types/playlist";
+import { getUserPlaylistCSR } from "@/utils/apiFunc/playlist";
+import { fetchUserInfo } from "@/utils/apiFunc/user";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import { useEffect, useState } from "react";
 import { SelectAddPlaylist } from "../SelectAddPlaylist/SelectAddPlaylist";
 import styles from "./AddPlaylist.module.css";
-import { fetchUserInfo } from "@/utils/apiFunc/user";
-import { getUserPlaylistCSR } from "@/utils/apiFunc/playlist";
 
 export const AddPlaylist = ({
   id,
@@ -25,7 +25,6 @@ export const AddPlaylist = ({
     }
   };
 
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: プレイリスト作成、編集モーダルの開閉により更新
   useEffect(() => {
     const getUser = async () => {
@@ -42,7 +41,7 @@ export const AddPlaylist = ({
     const fetchData = async () => {
       // プレイリストIDからそのプレイリスト内の楽曲を取得し、
       // {playlistId, musicFlag: boolean}のオブジェクトを返す
-      const results:(PlaylistItemObj | null)[] = await Promise.all(
+      const results: (PlaylistItemObj | null)[] = await Promise.all(
         playlists.map(async (playlist) => {
           const playlistId = playlist.id;
           const songs = await getUserPlaylistCSR(playlistId);
@@ -50,7 +49,7 @@ export const AddPlaylist = ({
             return { playlistId, musicFlag: true };
           }
           return null;
-        })
+        }),
       );
       // results 配列の中から null じゃないもの（＝有効なプレイリスト情報）だけを
       // 取り出してvalidPlaylists に入れる。
@@ -64,12 +63,12 @@ export const AddPlaylist = ({
           validPlaylists.push(item);
         }
       }
-  
+
       setDefaultPlaylists(validPlaylists);
     };
-  
+
     fetchData();
-  }, [user, id, playlists, modalOpen]);  
+  }, [user, id, playlists, modalOpen]);
 
   return (
     <>

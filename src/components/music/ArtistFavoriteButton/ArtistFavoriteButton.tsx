@@ -24,7 +24,7 @@ const ArtistFavoriteButton = ({
   // biome-ignore lint/correctness/useExhaustiveDependencies: マウント時のみ実行
   useEffect(() => {
     // ログインしている時のみ
-    if(favoriteArtists) {
+    if (favoriteArtists) {
       doneFav();
     }
   }, []);
