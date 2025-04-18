@@ -63,6 +63,22 @@ export const getUserPlaylistCSR = async (id: number) => {
   }
 };
 
+// プレイリストのIDからプレイリスト内のapi_song_idを取得する
+// サーバーサイド
+// (CSRとほぼ同じ処理)
+export const getSongPlaylist = async (id: number, token: string) => {
+  const res = await fetch(`http://localhost:3005/playlist/${id}`, {
+    cache: "no-cache",
+    headers: {
+      Authorization: `${token}`,
+    },
+  });
+  if (!res.ok) {
+    throw new Error("プレイリストの情報が得られませんでした");
+  }
+  return res;
+};
+
 export const postSongPlayList = async (diffPlaylists: DiffPlaylists[], musicId: number) => {
   const response = await fetch(`http://localhost:3005/playlist/music/${musicId}`, {
     method: "POST",
@@ -97,20 +113,6 @@ export const deleteSongPlaylist = async (diffPlaylists: DiffPlaylists[], musicId
     throw new Error("プレイリスト内の楽曲の削除ができませんでした");
   }
   return response;
-};
-
-// プレイリストのIDからプレイリスト内のapi_song_idを取得する
-export const getSongPlaylist = async (id: number, token: string) => {
-  const res = await fetch(`http://localhost:3005/playlist/${id}`, {
-    cache: "no-cache",
-    headers: {
-      Authorization: `${token}`,
-    },
-  });
-  if (!res.ok) {
-    throw new Error("プレイリストの情報が得られませんでした");
-  }
-  return res;
 };
 
 export const deletePlaylist = async (id: number) => {

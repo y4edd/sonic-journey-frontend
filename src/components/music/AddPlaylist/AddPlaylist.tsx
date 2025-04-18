@@ -22,6 +22,8 @@ export const AddPlaylist = ({
   const handleAddPlaylist = () => {
     if (user) {
       setModalOpen(true);
+    } else {
+      alert("ログインユーザー限定の機能です");
     }
   };
 
