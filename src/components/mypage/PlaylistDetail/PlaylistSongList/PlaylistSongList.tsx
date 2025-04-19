@@ -33,14 +33,19 @@ export const PlaylistSongList = ({
   // 曲を再生
   // start_flagがtrueの時、プレイリストの一曲目から再生を始める。falseの時、currentIndexの曲を再生する
   const handlePlay = async (type: "standard" | "continuous" | "interrupted") => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      if (type === "standard") {
-        setCurrentIndex(0);
-        audioRef.current.currentTime = 0;
-      }
-      await audioRef.current.play();
-      setIsPlaying(true);
+    // TypeScript の型解析はクロージャの中では if チェックを信用しない
+    // 対応策として、一時変数に保存する
+    const audio = audioRef.current;
+    if (audio) {
+      audio.pause();
+      setTimeout(async() => {
+        if (type === "standard") {
+          setCurrentIndex(0);
+          audio.currentTime = 0;
+        }
+        await audio.play();
+        setIsPlaying(true);
+      },50);
     }
     await savePlayHistory(currentSong.id);
   };
