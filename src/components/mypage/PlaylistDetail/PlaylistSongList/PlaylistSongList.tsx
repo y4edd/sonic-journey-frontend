@@ -38,14 +38,14 @@ export const PlaylistSongList = ({
     const audio = audioRef.current;
     if (audio) {
       audio.pause();
-      setTimeout(async() => {
+      setTimeout(async () => {
         if (type === "standard") {
           setCurrentIndex(0);
           audio.currentTime = 0;
         }
         await audio.play();
         setIsPlaying(true);
-      },50);
+      }, 50);
     }
     await savePlayHistory(currentSong.id);
   };
