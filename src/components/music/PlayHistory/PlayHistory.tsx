@@ -21,18 +21,18 @@ const PlayHistory = async () => {
   }
   // ログインユーザーの試聴履歴楽曲のidを取得
   const playHistory = await getPlayHistory(token, 6);
-  if(playHistory.length === 0) {
-    return(
-      <p className={styles.nothingHistory}>試聴履歴がありません</p>
-    );
+  if (playHistory.length === 0) {
+    return <p className={styles.nothingHistory}>試聴履歴がありません</p>;
   }
 
   // 取得したidを使って楽曲情報を取得
-  const playHistories = await Promise.all(playHistory.map(async(id: number) => {
-    const idStr = id.toString();
-    const songs = await getSong(idStr);
-    return songs;
-  }));
+  const playHistories = await Promise.all(
+    playHistory.map(async (id: number) => {
+      const idStr = id.toString();
+      const songs = await getSong(idStr);
+      return songs;
+    }),
+  );
 
   const playHistorySongs: PlayHistorySong[] = playHistories;
 
