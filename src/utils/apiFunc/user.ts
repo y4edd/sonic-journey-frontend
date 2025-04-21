@@ -31,7 +31,6 @@ export const fetchUserInfo = async () => {
       if (res.statusCode === 403) {
         return;
       }
-      console.error(res.message);
     }
     return res;
   } catch (error) {

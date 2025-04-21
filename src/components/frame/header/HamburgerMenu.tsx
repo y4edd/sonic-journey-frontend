@@ -30,6 +30,9 @@ export const HamburgerMenu = () => {
       const data = await fetchUserInfo();
       if (data) {
         setUser(data.id);
+      } else {
+        // 非ログの場合にforbiddenエラーを出す必要はない
+        setUser("");
       }
     };
     getUser();

@@ -26,10 +26,11 @@ export const getPlayHistory = async (token: string, limit: number) => {
         Authorization: `${token}`,
       },
     });
+    const res = await response.json();
     if (!response.ok) {
+      console.log(res);
       throw new Error("再生履歴の取得に失敗しました");
     }
-    const res = await response.json();
     return res;
   } catch (error) {
     console.error(error);

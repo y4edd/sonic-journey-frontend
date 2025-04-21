@@ -33,7 +33,7 @@ const AlbumPage = async ({ params }: AlbumPageProps) => {
   const favSongIDs = await getFavoriteSongs(token);
 
   const playlists = await getUserPlaylist(token);
-
+  
   return (
     <>
       <BreadList

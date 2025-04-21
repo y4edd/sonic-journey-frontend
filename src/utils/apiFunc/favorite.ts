@@ -24,7 +24,7 @@ export const getFavoriteSongs = async (token: string) => {
     const res = await response.json();
     if (!response.ok) {
       // 非ログの状態でエラーを返す必要はない
-      if (res.statusCode === 403) {
+      if (res.statusCode === 401) {
         return;
       }
       throw new Error("データが見つかりませんでした");
@@ -67,7 +67,7 @@ export const getFavoriteArtistsForFav = async (token: string) => {
 
     if (!response.ok) {
       // 非ログの状態の時は早期リターン
-      if (res.statusCode === 403) {
+      if (res.statusCode === 401) {
         return;
       }
       throw new Error("データが見つかりませんでした");

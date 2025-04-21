@@ -38,7 +38,6 @@ export const getUserPlaylist = async (user_id: string) => {
       }
       throw new Error("データが見つかりませんでした");
     }
-
     return res;
   } catch (error) {
     console.error(error);

@@ -21,29 +21,39 @@ const PlayHistory = async () => {
   }
   // ログインユーザーの試聴履歴楽曲のidを取得
   const playHistory = await getPlayHistory(token, 6);
-  // 取得したidを使って楽曲情報を取得
-  const playHistories = await Promise.all(playHistory.map((id: number) => getSong(id.toString())));
+  if(playHistory.length === 0) {
+    return(
+      <p className={styles.nothingHistory}>試聴履歴がありません</p>
+    );
+  }
 
-  const playHistorySongs = playHistories.map((playHistorySong) => {
-    return playHistorySong;
-  });
+  // 取得したidを使って楽曲情報を取得
+  const playHistories = await Promise.all(playHistory.map(async(id: number) => {
+    const idStr = id.toString();
+    const songs = await getSong(idStr);
+    return songs;
+  }));
+
+  const playHistorySongs: PlayHistorySong[] = playHistories;
 
   return (
-    <div className={styles.playHistoryGroup}>
-      {playHistorySongs.length > 0 ? (
-        playHistorySongs.map((song: PlayHistorySong) => {
-          return (
-            <Link href={`/music/${song.id}`} key={song.id} className={styles.playHistorySong}>
-              <Image src={song.cover_xl} alt={`${song.title}の画像`} width={150} height={150} />
-              <p>{song.title}</p>
-              <p>{song.artist.name}</p>
-            </Link>
-          );
-        })
-      ) : (
-        <p className={styles.nothingHistory}>試聴履歴がありません</p>
-      )}
-    </div>
+    <>
+      <div className={styles.playHistoryGroup}>
+        {playHistorySongs.length > 0 ? (
+          playHistorySongs.map((song: PlayHistorySong) => {
+            return (
+              <Link href={`/music/${song.id}`} key={song.id} className={styles.playHistorySong}>
+                <Image src={song.cover_xl} alt={`${song.title}の画像`} width={150} height={150} />
+                <p>{song.title}</p>
+                <p>{song.artist.name}</p>
+              </Link>
+            );
+          })
+        ) : (
+          <p className={styles.nothingHistory}>試聴履歴がありません</p>
+        )}
+      </div>
+    </>
   );
 };
 
