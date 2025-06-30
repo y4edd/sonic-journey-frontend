@@ -32,7 +32,7 @@
     "react-hook-form": "^7.56.2",
     "react-toastify": "^10.0.6",
     "storybook": "7.6.20",
-    "swiper": "^11.1.14",
+    "swiper": "^11.2.10",
     "swr": "^2.3.3",
     "ts-node": "^10.9.2",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
